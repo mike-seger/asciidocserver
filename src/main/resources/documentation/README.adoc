@@ -1,0 +1,28 @@
+= AsciiDoc Server
+
+== Purpose
+
+A SpringBoot application serving AsciiDoc documents as HTML 5.
+
+== Examples
+
+The examples below demonstrate the functionality of this application:
+
+=== AsciiDoc Quick Reference
+This is the official Quick reference composed of dozens of adoc snippets. All files are hosted locally. +
+link:quickref/asciidoc-syntax-quick-reference.adoc[AsciiDoc Quick Reference]
+
+=== AsciiDoc Diagrams
+This is a collection of diagrams with enhanced styling over the defaults.
+Diagrams are simple ASCII definitions and rendered directly using the AsciiDoc Diagrams library. +
+link:asciidoc-diagrams.adoc[AsciiDoc Diagrams]
+
+== Links
+https://github.com/darshandsoni/asciidoctor-skins +
+https://darshandsoni.com/asciidoctor-skins/ +
+https://github.com/asciidoctor/docgist +
+https://github.com/Mogztter/asciidoctor-kroki +
+https://www.asciidocfx.com/ +
+https://plantuml.com/sequence-diagram +
+https://www.programcreek.com/java-api-examples/?api=org.asciidoctor.Asciidoctor
+https://github.com/RicardoNiepel/C4-PlantUML

@@ -1,0 +1,933 @@
+= AsciiDoc Diagram Examples
+
+link:quickref/asciidoc-syntax-quick-reference.adoc[Example AsciiDoc Quick Reference]
+
+== Sequence Diagrams
+=== Styled
+==== Colors
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+autonumber
+skinparam ParticipantPadding 20
+skinparam BoxPadding 20
+
+skinparam sequence {
+    ArrowColor #383b45
+    ActorBorderColor #383b45
+    LifeLineBorderColor #383b45
+    LifeLineBackgroundColor #cccccc
+
+    ParticipantBorderColor #3b4283
+    ParticipantFontSize 14
+    ParticipantFontColor #ffffff
+
+    ActorBackgroundColor #cccccc
+    ActorFontColor #383b45
+    ActorFontSize 14
+    ActorFontName Aapex
+}
+
+box "Box Foo1"
+participant "Participant\n1" as L #5b82a3
+participant "Participant\n2" as M #5b82a3
+end box
+participant "Participant\n3" as N #5b82a3
+
+L -> M: Authentication Request
+activate M
+M -> N: Authentication Request
+activate N
+M <-- N: Authentication Response
+deactivate N
+M --> L: Authentication Response
+deactivate M
+L -> M: Another authentication Request
+activate M
+M -> M: Loopback
+M --> L: Another authentication Response
+deactivate M
+----
+
+==== Colors and Font
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+hide footbox
+skinparam shadowing false
+skinparam style strictuml
+!MYFONT     = "Arial"
+!MYCOLOR    = "#222"
+!MYLINES    = "1.2"
+!MYSTYLE    = "normal"
+!$GROUP_A1  = "#d5dfec"
+!$GROUP_A2  = "#f3dcda"
+!$GROUP_A3  = "#ebf1de"
+!$GROUP_A4  = "#fdebdc"
+!HIDDEN     = "hidden"
+!unquoted function PART($x)       return "<u>" + $x + "</u>"
+!unquoted function ARROWLABEL($a) return "<color:"+MYCOLOR+"><back:white>"+$a
+!unquoted function GRP($a, $b)    return "group" + $a + " "+ $a + " " + $b
+skinparam sequence {
+  TitleFontSize               22
+  TitleFontStyle              MYSTYLE
+  TitleFontColor              MYCOLOR
+  TitleFontName               MYFONT
+  LifelineBorderColor         MYCOLOR
+  ActorBorderColor            MYCOLOR
+  ActorBackgroundColor        white
+  ActorBorderThickness        MYLINES
+  ActorFontColor              MYCOLOR
+  ParticipantFontColor        MYCOLOR
+  ParticipantFontStyle        MYSTYLE
+  ParticipantFontName         MYFONT
+  ParticipantBorderColor      MYCOLOR
+  ParticipantBackgroundColor  white
+  ParticipantBorderThickness  MYLINES
+  ArrowFontColor              MYCOLOR
+  ArrowFontStyle              MYSTYLE
+  ArrowFontName               MYFONT
+  ArrowColor                  MYCOLOR
+  ArrowThickness              MYLINES
+  GroupBorderColor            MYCOLOR
+  GroupBorderthickness        MYLINES
+  GroupHeaderFontStyle        MYSTYLE
+  GroupHeaderFontColor        MYCOLOR
+  GroupHeaderFontName         MYFONT
+  MessageAlign                center
+}
+
+title Authorization Flow
+
+actor u as "PART(User)"
+participant c as "PART(Client)\n"
+participant a as "PART(Auth)\nPART(Server)"
+participant s as "PART(Resource)\nPART(Server)"
+
+GRP($GROUP_A1, Init)
+u -> c  : ARROWLABEL(Request)
+end
+
+GRP($GROUP_A2, Authentication)
+c -> a  : ARROWLABEL(Redirect to Auth)
+u <-- a : ARROWLABEL(Request for login / approval)
+u -> a  : ARROWLABEL(User authenticates / approves)
+end
+
+GRP($GROUP_A3, Authorization)
+u -[HIDDEN]-> c
+c <-- a : ARROWLABEL(Authorization code)
+c -> a  : ARROWLABEL(Authorization code + Client ID + Client Secret)
+a -> a  : ARROWLABEL(Validate)
+c <-- a : ARROWLABEL(ID Token + Access Token)
+end
+
+GRP($GROUP_A4, Access)
+u -[HIDDEN]-> c
+c -> s  : ARROWLABEL(GET /v2/Resource + Access Token)
+c <-- s : ARROWLABEL(Resource)
+end
+
+GRP($GROUP_A1, Done)
+u <-- c : ARROWLABEL(Results)
+end
+----
+
+=== Reverse Colors
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+
+skinparam monochrome reverse
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A: DoWork
+activate A
+
+A -> B: Create Request
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: Request Created
+deactivate B
+
+A --> User: Done
+deactivate A
+
+@enduml
+----
+
+=== Handwritten
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+' http://plantuml.com/skinparam.html
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+title Authentication Sequence
+
+Alice->Bob: Authentication Request
+note right of Bob: Bob thinks about it
+Bob->Alice: Authentication Response
+@enduml
+----
+
+=== Participant and Arrow Types
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+skinparam monochrome true
+actor Foo1
+boundary Foo2
+control Foo3
+entity Foo4
+database Foo5
+collections Foo6
+Foo1 ->x Foo2 : To boundary
+Foo1 -> Foo3 : To control
+Foo1 ->> Foo4 : To entity
+Foo1 -\ Foo5 : To database
+Foo1 \\- Foo6 : To collections
+Foo1 //-- Foo2 : To boundary
+Foo1 ->o Foo3 : To control
+Foo1 o\\-- Foo4 : To entity
+Foo1 <-> Foo5 : To database
+Foo1 <->o Foo6 : To collections
+----
+
+=== Auto Numbering Options
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+header Page Header
+footer Page %page% of %lastpage%
+autonumber "<b>[000]"
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber 15 "<b>(<u>##</u>)"
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+
+autonumber 40 10 "<font color=red><b>Message 0  "
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+----
+
+== ASCII Art Interaction Diagram
+[ditaa, svg, height="100%", width="100%"]]
+----
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ | cRED{d}|   |             |    |            {s}|
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+----
+
+== Tree
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+skinparam Legend {
+	BackgroundColor transparent
+	BorderColor transparent
+}
+legend
+Root
+|_ Element 1
+  |_ Element 1.1
+  |_ Element 1.2
+|_ Element 2
+  |_ Element 2.1
+end legend
+----
+
+== GraphViz Ethane Molecule
+[graphviz, svg, opts="inline", height="100%", width="100%"]
+----
+graph ethane {
+     C_0 -- H_0 [type=s];
+     C_0 -- H_1 [type=s];
+     C_0 -- H_2 [type=s];
+     C_0 -- C_1 [type=s];
+     C_1 -- H_3 [type=s];
+     C_1 -- H_4 [type=s];
+     C_1 -- H_5 [type=s];
+}
+----
+
+== Class Diagram
+["plantuml", svg, opts="inline", height="100%", width="100%"]
+----
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+----
+
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+skinparam class {
+    BackgroundColor PaleGreen
+    ArrowColor SeaGreen
+    BorderColor SpringGreen
+}
+skinparam stereotypeCBackgroundColor YellowGreen
+
+Class01 "1" *-- "many" Class02 : contains
+Class03 o-- Class04 : aggregation
+@enduml
+----
+
+[graphviz, svg, opts="inline", height="100%", width="100%"]
+----
+digraph foo {
+  node [style=rounded]
+  node1 [shape=box]
+  node2 [fillcolor=yellow, style="rounded,filled", shape=diamond]
+  node3 [shape=record, label="{ a | b | c }"]
+   node1 -> node2 -> node3
+}
+----
+
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+
+
+component asciidoctorj as adj
+component docToolChain as dtc
+
+file AsciiDoc as input
+file html
+file pdf
+file confluence
+file many_more
+
+input -> adj
+adj -> dtc : "html,\ndocbook"
+
+adj --> html
+adj --> pdf
+
+dtc --> confluence
+dtc --> many_more
+----
+
+== Mind Map
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startmindmap
+* Debian
+**[#Orange] Ubuntu
+*** Linux Mint
+***[#lightgreen] Kubuntu
+*** Lubuntu
+*** KDE Neon
+**[#lightblue] LMDE
+** SolydXK
+** SteamOS
+**[#FFBBCC] Raspbian with a very long name
+*** <s>Raspmbc</s> => OSMC
+*** <s>Raspyfi</s> => Volumio
+-- Windows 95
+-- Windows 98
+-- Windows NT
+--- Windows 8
+--- Windows 10
+@endmindmap
+----
+
+== Flow Diagram
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+title Servlet Container
+
+(*) --> "ClickServlet.handleRequest()"
+--> "new Page"
+
+if "Page.onSecurityCheck" then
+  ->[true] "Page.onInit()"
+
+  if "isForward?" then
+   ->[no] "Process controls"
+
+   if "continue processing?" then
+     -->[yes] ===RENDERING===
+   else
+     -->[no] ===REDIRECT_CHECK===
+   endif
+
+  else
+   -->[yes] ===RENDERING===
+  endif
+
+  if "is Post?" then
+    -->[yes] "Page.onPost()"
+    --> "Page.onRender()" as render
+    --> ===REDIRECT_CHECK===
+  else
+    -->[no] "Page.onGet()"
+    --> render
+  endif
+
+else
+  -->[false] ===REDIRECT_CHECK===
+endif
+
+if "Do redirect?" then
+ ->[yes] "redirect request"
+ --> ==BEFORE_DESTROY===
+else
+ if "Do Forward?" then
+  -left->[yes] "Forward request"
+  --> ==BEFORE_DESTROY===
+ else
+  -right->[no] "Render page template"
+  --> ==BEFORE_DESTROY===
+ endif
+endif
+
+--> "Page.onDestroy()"
+-->(*)
+----
+
+== Math
+=== Core
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+:<math>int_0^1f(x)dx</math>;
+:<math>x^2+y_1+z_12^34</math>;
+note right
+Try also
+<math>d/dxf(x)=lim_(h->0)(f(x+h)-f(x))/h</math>
+<latex>P(y|\mathbf{x}) \mbox{ or } f(\mathbf{x})+\epsilon</latex>
+end note
+@enduml
+----
+
+=== ASCII
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startmath
+f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
+@endmath
+----
+
+=== LaTEX
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startlatex
+\sum_{i=0}^{n-1} (a_i + b_i^2)
+@endlatex
+----
+
+== Gant Chart
+=== Without Date
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startgantt
+[Prototype design] lasts 13 days and is colored in Lavender/LightBlue
+[Test prototype] lasts 9 days and is colored in Coral/Green and starts 3 days after [Prototype design]'s end
+[Write tests] lasts 5 days and ends at [Prototype design]'s end
+[Hire tests writers] lasts 6 days and ends at [Write tests]'s start
+[Init and write tests report] is colored in Coral/Green
+[Init and write tests report] starts 1 day before [Test prototype]'s start and ends at [Test prototype]'s end
+@endgantt
+----
+
+=== With Date
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startgantt
+Project starts the 5th of october 2023
+saturday are closed
+sunday are closed
+2023/11/11 is opened
+[P_start] happens 2023-10-05
+[Prototype design] lasts 21 days
+[Test prototype] starts at [Prototype design]'s end and lasts 2 weeks
+[P_end]   happens 2023-11-15
+@endgantt
+----
+
+== Flow
+=== Workflow
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+!MYFONT = "Arial"
+!MYBORDER = 2
+skinparam defaultTextAlignment center
+!MY0 = "#eeeeee"
+!MY1 = "steelblue"
+!MY2 = "#aaffff"
+!MY3 = "wheat"
+skinparam activity {
+BackgroundColor         MY1
+BorderColor             MY3
+BorderThickness         MYBORDER
+DiamondBackgroundColor  MY1
+DiamondBorderColor      MY3
+DiamondFontColor        MY2
+DiamondFontName         MYFONT
+DiamondFontSize         15
+DiamondBorderThickness  MYBORDER
+FontColor               MY0
+FontName                MYFONT
+FontSize                15
+ArrowColor              gray
+ArrowFontColor          MY1
+ArrowFontName           MYFONT
+ArrowFontSize           15
+StartColor              MY1
+EndColor                MY1
+}
+
+Title Issue Workflow\n
+start
+:Is it a real issue?;
+:Talk with other engineers\nand teams to check if it's\na real issue;
+if (Decide if the issue must be\ntracked as Defect) then ( NO )
+ :Create a different backlog\n(Story or Task) to track in Jira;
+else ( YES )
+ if (Query Jira to see if same or\nsimilar issue has been open) then ( NO )
+  :Gather information\nabout the issue;
+  :Create Bug type issue\nin Jira and provide\nall gathered information;
+  if (Is this issue high severity?) then ( YES )
+    :Inform stakeholders or\nengineers that the issue\nis concerning;
+   else ( NO )
+   endif
+ else ( YES )
+  :Update the issue with\ncomment that you hit the\nsame issue;
+  :Inform stakeholders or\nengineers that the issue\nis hit more than once;
+ endif
+endif
+end
+----
+
+=== Workflow 2
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+scale 1.2
+skinparam shadowing false
+skinparam defaultTextAlignment center
+!MYCOLOR       = "#2c95dd"
+!MYFONTCOLOR   = "white"
+!MYBORDERCOLOR = "black"
+skinparam activity {
+Fontcolor               MYFONTCOLOR
+BackgroundColor         MYCOLOR
+BorderColor             MYBORDERCOLOR
+ArrowColor              MYBORDERCOLOR
+ArrowFontColor          MYBORDERCOLOR
+ArrowFontSize           14
+DiamondFontColor        MYFONTCOLOR
+DiamondBackgroundColor  MYCOLOR
+DiamondBorderColor      MYBORDERCOLOR
+}
+skinparam swimlane {
+BorderThickness  0
+BorderColor      white
+TitleFontColor   hidden
+}
+!unquoted function DECIDE(a,b,c)
+if (a) then ( No )
+:b]
+else ( Yes )
+|2|
+:c]
+detach
+endif
+|1|
+!endfunction
+
+!a0 = "What do I want for my\nnext development environment"
+!a1 = "Windows?"
+!a2 = "Good decision"
+!a3 = "Not much \nchoice here"
+!b1 = "MacOS?"
+!b2 = "Just one \nmore question"
+!b3 = "Pretty good"
+!c1 = "Standard\nDesktop\nEnvironment?"
+!c2 = "MATE"
+!c3 = "GNOME"
+
+title Choosing
+|1|
+:a0]
+DECIDE(a1,a2,a3)
+DECIDE(b1,b2,b3)
+DECIDE(c1,c2,c3)
+detach
+----
+
+=== State Diagram
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+skinparam state {
+  BackgroundColor    lightblue
+  BorderColor        lightblue
+  Arrowcolor         gray
+}
+Title Simple App
+state d as "Docker"
+state app as "Application" : Source: main.go\nDocker container\n  Image: hobbit\n  Name: frodo
+state db as "MySQL DB" : Docker container\n  Image: mysql\n  Name: shire
+d --> app : build and \ndeploy using \ncreate_app.sh
+d --> db : deploy using \nprovision_db.sh
+app -r-> db : read and write \npersistent data
+----
+
+=== State Diagram Azure
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/master/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/Databases/AzureRedisCache.puml
+!includeurl AzurePuml/Databases/AzureCosmosDb.puml
+!includeurl AzurePuml/Databases/AzureSqlDatabase.puml
+!includeurl AzurePuml/Web/AzureWebApp.puml
+!includeurl AzurePuml/Web/AzureCDN.puml
+!includeurl AzurePuml/Web/AzureSearch.puml
+!includeurl AzurePuml/Storage/AzureBlobStorage.puml
+!includeurl AzurePuml/Storage/AzureQueueStorage.puml
+
+Person(user, "User")
+
+Container(spa, "Single-Page App", "Angular, JS")
+AzureWebApp(webApp, "Web & API App", "ASP.NET Core MVC 2.1, C#", "Delivers the SPA and provides RESTful web APIs which are consumed from the SPA")
+AzureCDN(cdn, "CDN", "Akamai S2", "caches publicly available content for lower latency and faster delivery of content")
+
+AzureBlobStorage(staticBlobStorage, "Static Content", "General Purpose v2, Hot, LRS")
+
+AzureQueueStorage(queue, "Queue", "General Purpose v2, LRS")
+AzureSearch(search, "Search Index", "Standard S1", "provides search suggestions, fuzzy search, and language-specific search, consolidates a single search index from multiple data stores")
+AzureRedisCache(redisCache, "Cache", "Standard C2")
+
+AzureCosmosDb(cosmosDb, "Document DB", "SQL API, 400 RUs")
+AzureSqlDatabase(sqlDb, "SQL DB", "Standard S3")
+
+AzureWebApp(webJob, "Web Job", "WebJobs SDK v3, C#", "runs long-running tasks in the background")
+
+Rel(user, spa, "Uses", "HTTPS")
+Rel(user, webApp, "Uses", "HTTPS")
+Rel(user, cdn, "Uses", "HTTPS")
+
+Rel_Neighbor(spa, webApp, "Uses", "JSON, HTTPS")
+Rel_Back_Neighbor(spa, webApp, "Delivers")
+
+Rel_Neighbor(cdn, staticBlobStorage, "Reads from")
+
+Rel(webApp, queue, "Puts background jobs into")
+Rel(webApp, sqlDb, "Reads from and writes to", "ADO.NET")
+Rel(webApp, cosmosDb, "Reads from and writes to", "SQL API")
+Rel(webApp, redisCache, "Reads from and writes to")
+Rel(webApp, search, "Reads from")
+
+Rel_U(webJob, queue, "Gets next job from")
+Rel_U(webJob, sqlDb, "Reads from and writes to", "ADO.NET")
+Rel_U(webJob, cosmosDb, "Reads from and writes to", "SQL API")
+Rel_U(webJob, redisCache, "Reads from and writes to")
+
+Rel_Back_Neighbor(cosmosDb, search, "Builds index from")
+Rel_Neighbor(search, sqlDb, "Builds index from")
+
+Lay_D(search, webJob)
+
+@enduml
+----
+
+
+=== State Diagram Cloud Insight
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+
+!define SPRITESURL https://raw.githubusercontent.com/rabelenda/cicon-plantuml-sprites/v1.0/sprites
+!includeurl SPRITESURL/tomcat.puml
+!includeurl SPRITESURL/kafka.puml
+!includeurl SPRITESURL/java.puml
+!includeurl SPRITESURL/cassandra.puml
+!includeurl SPRITESURL/python.puml
+!includeurl SPRITESURL/redis.puml
+
+
+title Cloudinsight sprites example
+
+skinparam monochrome true
+
+rectangle "<$tomcat>\nwebapp" as webapp
+queue "<$kafka>" as kafka
+rectangle "<$java>\ndaemon" as daemon
+rectangle "<$python>\ndaemon2" as daemon2
+database "<$cassandra>" as cassandra
+database "<$redis>" as redis
+
+webapp -> kafka
+kafka -> daemon
+kafka -> daemon2
+daemon --> cassandra
+daemon2 --> redis
+
+@enduml
+----
+
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+footer Kubernetes Plant-UML
+scale max 1024 width
+skinparam linetype polyline
+skinparam nodesep 10
+skinparam ranksep 10
+
+
+
+' Azure
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl AzurePuml/Compute/AzureAppService.puml
+!includeurl AzurePuml/Compute/AzureBatch.puml
+!includeurl AzurePuml/Containers/AzureContainerRegistry.puml
+!includeurl AzurePuml/Containers/AzureKubernetesService.puml
+!includeurl AzurePuml/Databases/AzureDatabaseForPostgreSQL.puml
+!includeurl AzurePuml/Databases/AzureCosmosDb.puml
+!includeurl AzurePuml/Databases/AzureSqlDatabase.puml
+!includeurl AzurePuml/DevOps/AzurePipelines.puml
+!includeurl AzurePuml/Identity/AzureActiveDirectory.puml
+!includeurl AzurePuml/Networking/AzureLoadBalancer.puml
+!includeurl AzurePuml/Security/AzureKeyVault.puml
+!includeurl AzurePuml/Storage/AzureBlobStorage.puml
+!includeurl AzurePuml/Storage/AzureStorage.puml
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesApi.puml
+!includeurl KubernetesPuml/OSS/KubernetesIng.puml
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+
+actor "DevOps" as devopsAlias
+collections "Client Apps" as clientalias
+collections "Helm Charts" as helmalias
+
+left to right direction
+
+' Azure Components
+AzureActiveDirectory(aad, "\nAzure\nActive Directory", "Global")
+AzureContainerRegistry(acr, "ACR", "Canada Central")
+AzureCosmosDb(cosmos, "\nCosmos DB", "Global")
+AzureKeyVault(keyvault, "\nAzure\nKey Vault", "Global")
+AzureLoadBalancer(alb, "\nLoad\nBalancer", "Canada Central")
+AzureSqlDatabase(sql, "\nExternal\ndata stores", "Canada Central")
+AzurePipelines(ado, "CI/CD\nAzure Pipelines", "Global")
+
+' Kubernetes Components
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+KubernetesApi(KubernetesApi, "Kubernetes API", "")
+
+    Namespace_Boundary(nsFrontEnd, "Front End") {
+        KubernetesIng(ingress, "API Gateway", "")
+    }
+
+    Namespace_Boundary(nsBackEnd, "Back End") {
+        KubernetesPod(KubernetesBE1, "", "")
+        KubernetesPod(KubernetesBE2, "", "")
+        KubernetesPod(KubernetesBE3, "", "")
+    }
+
+    Namespace_Boundary(nsUtil, "Utiliy Services") {
+        KubernetesPod(KubernetesUtil1, "", "")
+        KubernetesPod(KubernetesUtil2, "","")
+    }
+}
+
+Rel(devopsAlias, aad, "AUTH")
+Rel(helmalias, KubernetesApi, "helm upgrade")
+
+Rel(aad, keyvault, " ")
+Rel(KubernetesApi, aad, "RBAC", "ASYNC")
+
+Rel(clientalias, alb, "HTTP", "ASYNC")
+Rel(alb, ingress, "HTTP", "ASYNC")
+
+Rel(ingress, KubernetesBE1, " ")
+Rel(KubernetesBE1, KubernetesBE2, " ")
+Rel(KubernetesBE1, KubernetesBE3, " ")
+
+Rel(KubernetesBE2, sql, " ")
+Rel(KubernetesBE3, keyvault, "Pod Identity")
+Rel(KubernetesBE3, cosmos, " ")
+
+Rel(ado, acr, "docker push")
+Rel_U(KubernetesApi, acr, "docker pull")
+@enduml
+----
+
+[plantuml, svg, opts="inline", height="100%", width="100%"]
+----
+@startuml
+skinparam DefaultTextAlignment center
+skinparam arrowColor #000000
+skinparam rectangleBackgroundColor #CFE2F3
+skinparam fileBackgroundColor #CFE2F3
+skinparam databaseBackgroundColor #CFE2F3
+skinparam defaultFontSize 18
+
+title ActionFPS portal architecture
+
+package "log collection" as p1 {
+    rectangle "syslog\nmultiple servers" <<"<&layers>">> as syslog
+    rectangle "Log lines\n(Syslog server)" <<"<&layers>">> as loglines
+    file "flat file" as flatfile1
+
+        syslog -> loglines
+        loglines -> flatfile1
+}
+package "Games, Clanwars, Achivements, Ranks" as p2 {
+
+    file "flat file" as flatFile2
+    rectangle "Log\nlines" <<"<&layers>">> as logLines2
+    rectangle "Game\nparser" <<"<&layers>">> as gameParser
+    rectangle "Add countries" as addCountries
+    rectangle "join with\nusers" as joinWithUsers
+    rectangle "Determine\nachievement" as determineAchievement
+    rectangle "join with\nclans" as joinWithClans
+    rectangle "Determine\nclanwar" as determineClanwar
+    database "Rich game\nrepository" as richGameRepository
+
+
+        flatFile2 -> logLines2
+        logLines2 -> gameParser
+        gameParser -> addCountries
+        addCountries -> joinWithUsers
+        joinWithUsers -> determineAchievement
+        determineAchievement -> joinWithClans
+        joinWithClans -> determineClanwar
+        determineClanwar -> richGameRepository
+
+    rectangle "GeoIP" as geoIp
+
+    loglines -[hidden]-> geoIp
+
+        geoIp --> addCountries
+
+    database "User\nrepository" as userRepository
+    file "users csv" as users.csv
+    file "Nicknames csv" as nicknames.csv
+
+        joinWithUsers --> userRepository
+        userRepository <-- users.csv
+        userRepository <-- nicknames.csv
+
+    rectangle "User\nachievements" <<"<&layers>">> as userAchievements #D9D2E9
+    rectangle "Hall of fame" as hallOfFame
+
+    determineAchievement --> userAchievements
+    userAchievements --> hallOfFame
+
+    rectangle "Generate\nclanwars" <<"<&layers>">> as generateClanwars
+    database "Clanwar\nrepository" as clanwarRepository
+    rectangle "Clan ranks" as clanRanks
+    rectangle "Challange Publish" as challangePublish #D9EAD3
+    rectangle "Player ranks" as playerRanks
+    rectangle "User statistics" <<"<&layers>">> as userStatistics #D9D2E9
+    rectangle "Challange Publish" as challangePublish2 #D9EAD3
+    rectangle "EventSource\nendpoint for new\ngames" as eventSourceEndpoint #D9EAD3
+
+
+        joinWithClans --> generateClanwars
+        determineClanwar --> generateClanwars
+        generateClanwars --> clanwarRepository
+        clanwarRepository -> clanRanks
+        clanwarRepository --> challangePublish
+        richGameRepository --> clanRanks
+        richGameRepository --> playerRanks
+        richGameRepository --> userStatistics
+        richGameRepository -> challangePublish2
+        eventSourceEndpoint <-- richGameRepository
+}
+
+@enduml
+
+@startuml
+skinparam DefaultTextAlignment center
+skinparam arrowColor #000000
+skinparam rectangleBackgroundColor #CFE2F3
+skinparam fileBackgroundColor #CFE2F3
+skinparam databaseBackgroundColor #CFE2F3
+skinparam defaultFontSize 18
+
+package "Pinger (Live games)" as p3 {
+    rectangle "Game\nservers" <<"<&layers>">> as gameServers
+    rectangle "UDP server\nstatus updates" <<"<&layers>">> as udpServer
+    rectangle "Status parser" <<"<&layers>">> as statusParser
+    rectangle "EventSource\nendpoint for\nstatus updates" as eventSourceEndpoint2 #D9EAD3
+
+        gameServers -> udpServer
+        udpServer -> statusParser
+        statusParser -> eventSourceEndpoint2
+}
+
+package "Ladder" as p4 {
+    file "SSH log file" as sshLogFile
+    rectangle "Log lines" <<"<&layers>">> as logLines3
+    rectangle "join with users" as joinWithUsers2
+    rectangle "User ladder\nstatistics" <<"<&layers>">> as userLadderStatistics #D9D2E9
+    database "User\nrepository"  as userRepository2
+
+        sshLogFile -> logLines3
+        logLines3 -> joinWithUsers2
+        joinWithUsers2 -> userLadderStatistics
+        joinWithUsers2 <-- userRepository2
+}
+p3 -[hidden]-> p4
+
+package "Inters" as p5 {
+    database "User\nrepository" as userRepository3
+    file "flat file" as flatFile3
+    rectangle "Log\nlines" <<"<&layers>">> as logLines4
+    rectangle "join with users" as joinWithUsers3
+    rectangle "EventSource\nendpoint" as eventSourceEndpoint3 #D9EAD3
+
+        userRepository3 --> joinWithUsers3
+        flatFile3 -> logLines4
+        logLines4 -> joinWithUsers3
+        joinWithUsers3 -> eventSourceEndpoint3
+}
+p4 -[hidden]> p5
+@enduml
+----

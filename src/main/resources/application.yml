@@ -1,0 +1,14 @@
+server:
+  port: ${app.asciidocserver.port:39005}
+
+asciidocserver:
+#  source-url: classpath:/documentation
+  source-url: file:${PWD}/src/main/resources/documentation
+  destination-id: 1
+
+spring:
+  application:
+    name: asciidocserver
+
+logging.level:
+  net.sf.jmimemagic.MagicParser: warn

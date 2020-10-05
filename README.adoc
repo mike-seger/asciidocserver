@@ -1,0 +1,51 @@
+= AsciiDoc Server - A SpringBoot application serving adoc pages as html
+
+== Running
+[source, bash]
+----
+./gradlew bootRun
+----
+
+== Configuration
+When running asciidocserver it watches `classpath:/documentation` by default.
+See: Link:./src/main/resources/application.yml
+
+== Links
+
+=== Main Link
+https://asciidoctor.org
+https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+
+=== Extensions
+https://asciidoctor.org/docs/extensions/
+https://github.com/bmuschko/asciidoctorj-tabbed-code-extension
+https://github.com/uniqueck/asciidoctorj-liquibase-extension
+https://github.com/hobbypunk90/asciidoctor-question
+https://puravida-asciidoctor.gitlab.io/asciidoctor-extensions/#_collapsable
+https://puravida-asciidoctor.gitlab.io/asciidoctor-barcode/
+https://github.com/Mogztter/asciidoctor-kroki
+
+=== Source Examples
+https://www.programcreek.com/java-api-examples/?api=org.asciidoctor.Asciidoctor
+
+=== Skins
+https://github.com/darshandsoni/asciidoctor-skins
+https://darshandsoni.com/asciidoctor-skins/
+
+=== Editors
+https://github.com/asciidoctor/docgist
+https://www.asciidocfx.com/
+
+=== Diagrams
+https://plantuml.com/sequence-diagram
+https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html
+https://plantuml-documentation.readthedocs.io/en/latest/diagrams/activity.html
+https://real-world-plantuml.com/?type=sequence
+https://github.com/matthewjosephtaylor/plantuml-style
+https://github.com/RicardoNiepel/C4-PlantUML
+https://www.sureaboutthat.com/posts/plantuml/
+http://www.plantuml.com/plantuml/uml/ZPD1Qy9048Nl-ok6U0xKH45AAMh1KnAalVOoIKQxQ6RIpQQLblxthgdeQaMTGmxplZVpXYNZngAnRRLMs5hXjih9g6QbkKQ35SoTg0jT8zivbgNc9KHtdZwLZTVtX8RUM-A2u5k1guanylaaQp7GYqTnFXZ-jGihPYgc9FDVJFI24irqLSTYjJJIShbZYgvK1ta77C_91z4eFaLcmlP5Vn7q1-UadNVHbV8kE9_W07Zcq-jFL-wR6LO44wnfetwKocK3mTHzPYBzGDM7O11uAL-v7m0sa41lc8yYZ2-GKKUcUvAu1BVcWYFk7DdUeH887o6zXqbhtuWTY5OBm_FsyHkhiB3w0or1gj8jcLqdCqS-XE5PjAc56r8b7T6X6vpSHAU7l2oEDe2tvNQEHAJEtJDx2_qPrnQFYKlta_q2
+
+
+
+
