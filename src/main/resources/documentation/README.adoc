@@ -37,3 +37,5 @@ https://www.asciidocfx.com/ +
 https://plantuml.com/sequence-diagram +
 https://www.programcreek.com/java-api-examples/?api=org.asciidoctor.Asciidoctor
 https://github.com/RicardoNiepel/C4-PlantUML
+
+https://plantuml.com/de/vizjs
