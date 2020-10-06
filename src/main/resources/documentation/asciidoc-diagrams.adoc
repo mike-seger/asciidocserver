@@ -1,5 +1,8 @@
 = AsciiDoc Diagram Examples
 :toclevels: 2
+:source-highlighter: prettify
+:icons: font
+:blockdiag-fontpath: {docdir}/assets/fonts/fg-virgil.ttf
 
 == Plant UML
 === Sequence Diagrams

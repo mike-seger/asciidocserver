@@ -17,7 +17,7 @@ public class FontInstaller {
 				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 				ge.registerFont(customFont);
 			}
-		} catch (IOException | FontFormatException e) {
+		} catch (Exception e) {
 			log.error("Unable to install font: {}", sourceUrl, e);
 		}
 	}

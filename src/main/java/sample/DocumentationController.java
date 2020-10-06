@@ -98,7 +98,9 @@ public class DocumentationController {
 
             Attributes attributes = AttributesBuilder.attributes()
                     .attribute("imagesoutdir", imageDir.getAbsolutePath())
+                    .attribute("docinfo", "shared")
                     .icons("font")
+                    .copyCss(true)
                     .tableOfContents2(Placement.LEFT)
                     .sectionNumbers(true)
                     .setAnchors(true)

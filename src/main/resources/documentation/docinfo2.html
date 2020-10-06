@@ -1,0 +1,357 @@
+<script src="assets/js/tocbot.min-4.12.0.js"></script>
+
+<style>
+
+/* Offline Fonts */
+
+@font-face {
+    font-family: 'Dylan';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/Dylan.ttf');
+}
+
+@font-face {
+    font-family: 'FG Virgil';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/fg-virgil.ttf');
+}
+
+@font-face {
+    font-family: 'Macs Handwriting';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/Macs%20Handwriting.ttf');
+}
+
+@font-face{
+    font-family:'FontAwesome';
+    font-weight: normal;
+    font-style : normal;
+    src:url('assets/fonts/fontawesome-webfont.eot);
+    src:url('assets/fonts/fontawesome-webfont.eot) format('embedded-opentype'),
+    url('assets/fonts/fontawesome-webfont.woff2) format('woff2'),
+    url('assets/fonts/fontawesome-webfont.woff) format('woff'),
+    url('assets/fonts/fontawesome-webfont.ttf) format('truetype'),
+    url('assets/fonts/fontawesome-webfont.svg) format('svg');
+    src : url("http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.eot);
+    src : url("http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.eot) format("embedded-opentype"),
+          url("http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.woff2) format("woff2"),
+          url("http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.woff) format("woff"),
+          url("http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.ttf) format("truetype"),
+          url("http://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/fonts/fontawesome-webfont.svg) format("svg");
+    font-weight:normal;
+    font-style:normal
+  }
+
+/* Offline Fonts */
+@font-face {
+    font-family: 'Noto Serif';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/NotoSerif-Regular.ttf');
+}
+/* noto-serif-italic - latin */
+
+@font-face {
+    font-family: 'Noto Serif';
+    font-style: italic;
+    font-weight: 400;
+    src: url('assets/fonts/NotoSerif-Italic.ttf');
+}
+/* noto-serif-700 - latin */
+
+@font-face {
+    font-family: 'Noto Serif';
+    font-style: normal;
+    font-weight: 700;
+    src: url('assets/fonts/NotoSerif-Bold.ttf');
+}
+/* noto-serif-700italic - latin */
+
+@font-face {
+    font-family: 'Noto Serif';
+    font-style: italic;
+    font-weight: 700;
+    src: url('assets/fonts/NotoSerif-BoldItalic.ttf');
+}
+/* droid-sans-mono-regular - latin */
+
+@font-face {
+    font-family: 'Droid Sans Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/DroidSansMono.ttf');
+}
+/* open-sans-300 - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: url('assets/fonts/open-sans-v18-latin-300.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans Light'), local('OpenSans-Light'), url('assets/fonts/open-sans-v18-latin-300.eot) format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/open-sans-v18-latin-300.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-300.woff') format('woff'),
+    /* Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-300.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/open-sans-v18-latin-300.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+/* open-sans-300italic - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 300;
+    src: url('assets/fonts/open-sans-v18-latin-300italic.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans Light Italic'), local('OpenSans-LightItalic'), url('assets/fonts/open-sans-v18-latin-300italic.eot) format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/open-sans-v18-latin-300italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-300italic.woff') format('woff'),
+    /* Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-300italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/open-sans-v18-latin-300italic.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+/* open-sans-regular - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/open-sans-v18-latin-regular.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans Regular'), local('OpenSans-Regular'), url('assets/fonts/open-sans-v18-latin-regular.eot) format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/open-sans-v18-latin-regular.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-regular.woff') format('woff'),
+    /* Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-regular.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/open-sans-v18-latin-regular.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+/* open-sans-italic - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: url('assets/fonts/open-sans-v18-latin-italic.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans Italic'), local('OpenSans-Italic'), url('assets/fonts/open-sans-v18-latin-italic.eot) format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/open-sans-v18-latin-italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-italic.woff') format('woff'),
+    /* Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/open-sans-v18-latin-italic.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+/* open-sans-600 - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: url('assets/fonts/open-sans-v18-latin-600.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'), url('assets/fonts/open-sans-v18-latin-600.eot) format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/open-sans-v18-latin-600.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-600.woff') format('woff'),
+    /* Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-600.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/open-sans-v18-latin-600.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+/* open-sans-600italic - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 600;
+    src: url('assets/fonts/open-sans-v18-latin-600italic.eot');
+    /* IE9 Compat Modes */
+    src: local('Open Sans SemiBold Italic'), local('OpenSans-SemiBoldItalic'), url('assets/fonts/open-sans-v18-latin-600italic.eot) format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/open-sans-v18-latin-600italic.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-600italic.woff') format('woff'),
+    /* Modern Browsers */
+    url('assets/fonts/open-sans-v18-latin-600italic.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/open-sans-v18-latin-600italic.svg#OpenSans') format('svg');
+    /* Legacy iOS */
+}
+</style>
+<script>
+    /* Tocbot dynamic TOC, works with Tocbot 3.0.6
+    http://tscanlin.github.io/tocbot/ */
+    document.addEventListener('DOMContentLoaded', function() {
+
+      var oldtoc = document.getElementById('toctitle').nextElementSibling;
+      var newtoc = document.createElement('div');
+      newtoc.setAttribute('id', 'tocbot');
+      newtoc.setAttribute('class', 'js-toc');
+      oldtoc.parentNode.replaceChild(newtoc, oldtoc);
+
+      var tocbot_opts = { contentSelector: '#content',
+          headingSelector: 'h1, h2, h3, h4',
+          smoothScroll: true,
+          // Headings that match the ignoreSelector will be skipped.
+      		ignoreSelector: '.js-toc-ignore',
+      		// Main class to add to links.
+      		linkClass: 'toc-link',
+      		// Extra classes to add to links.
+      		extraLinkClasses: '',
+      		// Class to add to active links,
+      		// the link corresponding to the top most heading on the page.
+      		activeLinkClass: 'is-active-link',
+      		// Main class to add to lists.
+      		listClass: 'toc-list',
+      		// Extra classes to add to lists.
+      		extraListClasses: '',
+      		// Class that gets added when a list should be collapsed.
+      		isCollapsedClass: 'is-collapsed',
+      		// Class that gets added when a list should be able
+      		// to be collapsed but isn't necessarily collapsed.
+      		collapsibleClass: 'is-collapsible',
+      		// Class to add to list items.
+      		listItemClass: 'toc-list-item',
+      		// How many heading levels should not be collpased.
+      		// For example, number 6 will show everything since
+      		// there are only 6 heading levels and number 0 will collpase them all.
+      		// The sections that are hidden will open
+      		// and close as you scroll to headings within them.
+      		collapseDepth: 2,
+      		// Smooth scrolling enabled.
+      		smoothScroll: true,
+      		// Smooth scroll duration.
+      		smoothScrollDuration: 420,
+          	// Callback for scroll end (requires: smoothScroll).
+                // This works but only well in Chrome :-(
+      		scrollEndCallback: function (e) { document.getElementsByClassName('is-active-link')[0].scrollTop += 100; tocbot.refresh(); document.getElementsByClassName('is-active-link')[0].scrollIntoView({ behavior: 'smooth' });  },
+      		// Headings offset between the headings and the top of the document (this is meant for minor adjustments).
+      		headingsOffset: 0,
+      		// Timeout between events firing to make sure it's
+      		// not too rapid (for performance reasons).
+      		throttleTimeout: 50,
+      		// Element to add the positionFixedClass to.
+      		positionFixedSelector: null,
+      		// Fixed position class to add to make sidebar fixed after scrolling
+      		// down past the fixedSidebarOffset.
+      		positionFixedClass: 'is-position-fixed',
+      		// fixedSidebarOffset can be any number but by default is set
+      		// to auto which sets the fixedSidebarOffset to the sidebar
+      		// element's offsetTop from the top of the document on init.
+      		fixedSidebarOffset: 'auto',
+      		// includeHtml can be set to true to include the HTML markup from the
+      		// heading node instead of just including the textContent.
+      		includeHtml: false
+      }
+
+	  tocbot.init(tocbot_opts);
+
+      var handleTocOnResize = function() {
+          var width = window.innerWidth
+                      || document.documentElement.clientWidth
+                      || document.body.clientWidth;
+          if (width < 768) {
+              tocbot.refresh({ contentSelector: '#content',
+                  headingSelector: 'h1, h2, h3, h4',
+                  collapseDepth: 6,
+                  activeLinkClass: 'ignoreactive',
+                  throttleTimeout: 1000,
+                  smoothScroll: false });
+          }
+          else {
+              tocbot.refresh(tocbot_opts);
+          }
+      };
+      window.addEventListener('resize', handleTocOnResize);
+      handleTocOnResize();
+    }, false);
+</script>
+<script>
+// direct embedding of tocbot.min.js version 3.0.6
+!function(e){function t(o){if(n[o])return n[o].exports;var i=n[o]={i:o,l:!1,exports:{}};return e[o].call(i.exports,i,i.exports,t),i.l=!0,i.exports}var n={};t.m=e,t.c=n,t.d=function(e,n,o){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:o})},t.n=function(e){var n=e&&e.__esModulea",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=0)}([function(e,t,n){(function(o){var i,l,r;!function(n,o){l=[],i=o(n),void 0!==(r="function"==typeof iuse strict";function t(){for(var e={},t=0;t<arguments.length;t++){var n=arguments[t];for(var o in n)m.call(n,o)&&(e[o]=n[o])}return e}function o(e,t,n){t||(t=250);var o,i;return function(){var l=n||this,r=+new Date,s=arguments;o&&r<o+tundefined"!=typeof window){var d,f=!!e.document.querySelector&&!!e.addEventListener,m=Object.prototype.hasOwnProperty;return c.destroy=function(){try{document.querySelector(s.tocSelector).innerHTML=""}catch(e){console.warn("Element not found: "+s.tocSelector)}document.removeEventListener("scroll",this._scrollListener,!1),document.removeEventListener("resize",this._scrollListener,!1),i&&document.removeEventListener("click",this._clickListener,!1)},c.init=function(e){if(f&&(s=t(r,e||{}),this.options=s,this.state={},s.smoothScroll&&(c.zenscroll=n(5),c.zenscroll.setup(s.smoothScrollDuration)),i=a(s),l=u(s),this._buildHtml=i,this._parseContent=l,c.destroy(),null!==(d=l.selectHeadings(s.contentSelector,s.headingSelector)))){var m=l.nestHeadingsArray(d),p=m.nest;return i.render(s.tocSelector,p),this._scrollListener=o(function(e){i.updateToc(d);var t=e&&e.target&&e.target.scrollingElement&&0===e.target.scrollingElement.scrollTop;(e&&0===e.eventPhase||t)&&(i.enableTocAnimation(),i.updateToc(d),s.scrollEndCallback&&s.scrollEndCallback(e))},s.throttleTimeout),this._scrollListener(),document.addEventListener("scroll",this._scrollListener,!1),document.addEventListener("resize",this._scrollListener,!1),this._clickListener=o(function(e){s.smoothScroll&&i.disableTocAnimation(e),i.updateToc(d)},s.throttleTimeout),document.addEventListener("click",this._clickListener,!1),this}},c.refresh=function(e){c.destroy(),c.init(e||this.options)},e.tocbot=c,c}})}).call(t,n(1))},function(e,t){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(e){"object"==typeof window&&(n=window)}e.exports=n},function(e,t){e.exports={tocSelector:".js-toc",contentSelector:".js-toc-content",headingSelector:"h1, h2, h3",ignoreSelector:".js-toc-ignore",linkClass:"toc-link",extraLinkClasses:"",activeLinkClass:"is-active-link",listClass:"toc-list",extraListClasses:"",isCollapsedClass:"is-collapsed",collapsibleClass:"is-collapsible",listItemClass:"toc-list-item",collapseDepth:0,smoothScroll:!0,smoothScrollDuration:420,scrollEndCallback:function(e){},headingsOffset:1,throttleTimeout:50,positionFixedSelector:null,positionFixedClass:"is-position-fixed",fixedSidebarOffset:"auto",includeHtml:!1,onClick:!1}},function(e,t){e.exports=function(e){function t(e,n){var l=n.appendChild(o(e));if(e.children.length){var r=i(e.isCollapsed);e.children.forEach(function(e){t(e,r)}),l.appendChild(r)}}function n(e,n){var o=i(!1);n.forEach(function(e){t(e,o)});var l=document.querySelector(e);if(null!==l)return l.firstChild&&l.removeChild(l.firstChild),l.appendChild(o)}function o(t){var n=document.createElement("li"),o=document.createElement("a");return e.listItemClass&&n.setAttribute("class",e.listItemClass),e.onClick&&(o.onclick=e.onClick),e.includeHtml&&t.childNodes.lengthhref","#"+t.id),o.setAttribute("class",e.linkClass+p+"node-name--"+t.nodeName+p+e.extraLinkClasses),n.appendChild(o),n}function i(t){var n=document.createElement("ul"),o=e.listClass+p+e.extraListClasses;return t&&(o+=p+e.collapsibleClass,o+=p+e.isCollapsedClass),n.setAttribute("class",o),n}function l(){var t=document.documentElement.scrollTop||f.scrollTop,n=document.querySelector(e.positionFixedSelector);"auto"===e.fixedSidebarOffset&&(e.fixedSidebarOffset=document.querySelector(e.tocSelector).offsetTop),t>e.fixedSidebarOffset")}function r(t){var n=document.documentElement.scrollTop||f.scrollTop;e.positionFixedSelector&&l();var o,i=t;if(m&&null!==document.querySelector(e.tocSelector)&&i.length>0){d.call(i,function(t,l){if(t.offsetTop>n+e.headingsOffset+10){return o=i[0===l."+e.linkClass);u.call(r,function(t){t.className=t.className.split(p+e.activeLinkClass).join("")});var c=document.querySelector(e.tocSelector).querySelector("."+e.linkClass+".node-name--"+o.nodeName+'[href="#'+o.id+'"]');c.className+=p+e.activeLinkClass;var a=document.querySelector(e.tocSelector).querySelectorAll("."+e.listClass+"."+e.collapsibleClass);u.call(a,function(t){var n=p+e.isCollapsedClass;-1===t.className.indexOf(n)&&(t.className+=p+e.isCollapsedClass)}),c.nextSibling&&(c.nextSibling.className=c.nextSibling.className.split(p+e.isCollapsedClass).join("")),s(c.parentNode.parentNode)}}function s(t){return-1!==t.className.indexOf(e.collapsibleClass)"),s(t.parentNode.parentNode)):t}function c(t){var n=t.target||t.srcElement;"string"==typeof n.className&&-1!==n.className.indexOf(e.linkClass)&&(m=!1)}function a(){m=!0}var u=[].forEach,d=[].some,f=document.body,m=!0,p=" ";return{enableTocAnimation:a,disableTocAnimation:c,render:n,updateToc:r}}},function(e,t){e.exports=function(e){function t(e){return e[e.length-1]}function n(e){return+e.nodeName.split("H").join("")}function o(t){var o={id:t.id,children:[],nodeName:t.nodeName,headingLevel:n(t),textContent:t.textContent.trim()};return e.includeHtml&&(o.childNodes=t.childNodes),o}function i(i,l){for(var r=o(i),s=n(i),c=l,a=t(c),u=a,").map(function(t){return t.trim()+":not("+e.ignoreSelector+")"}));try{return document.querySelector(t).querySelectorAll(o)}catch(e){return console.warn("Element not found: "+t),null}}function r(e){return s.call(e,function(e,t){return i(o(t),e.nest),e},{nest:[]})}var s=[].reduce;return{nestHeadingsArray:r,selectHeadings:l}}},function(e,t,n){var o,i,l;!function(n,r){i=[],o=r(),void 0!==(l="function"==typeof ouse strict";var e=function(e){return"getComputedStyle"in window&&"smooth"===window.getComputedStyle(e)["scroll-behavior"]};if("undefined"==typeof window||!("document"in window))return{};var t=function(t,n,o){n=n||999,o||0===o||(o=9);var i,l=function(e){i=e},r=function(){clearTimeout(i),l(0)},s=function(e){return Math.max(0,t.getTopOf(e)-o)},c=function(o,i,s){if(r(),0===i||i&&i<0||e(t.body))t.toY(o),s&&s();else{var c=t.getY(),a=Math.max(0,o)-c,u=(new Date).getTime();i=i||Math.min(Math.abs(a),n),function e(){l(setTimeout(function(){var n=Math.min(1,((new Date).getTime()-u)/i),o=Math.max(0,Math.floor(c+a*(n<.5addEventListener"in window&&!window.noZensmooth&&!e(document.body)){var l="scrollRestoration"in history;l&&(history.scrollRestoration="auto"),window.addEventListener("load",function(){l&&(setTimeout(function(){history.scrollRestoration="manual"},9),window.addEventListener("popstate",function(e){e.state&&"zenscrollY"in e.state&&i.toY(e.state.zenscrollY)},!1)),window.location.hash&&setTimeout(function(){var e=i.setup().edgeOffset;if(e){var t=document.getElementById(window.location.href.split("#")[1]);if(t){var n=Math.max(0,i.getTopOf(t)-e),o=i.getY()-n;0<=o&&o<9&&window.scrollTo(0,n)}}},9)},!1);var r=new RegExp("(^|\\s)noZensmooth(\\s|$)");window.addEventListener("click",function(e){for(var t=e.target;t&&"A"!==t.tagName;)t=t.parentNode;if(!(!t||1!==e.which||e.shiftKey||e.metaKey||e.ctrlKey||e.altKey)){if(l)try{history.replaceState({zenscrollY:i.getY()},"")}catch(e){}var n=t.getAttribute("href")||"";if(0===n.indexOf("#")&&!r.test(t.className)){var o=0,s=document.getElementById(n.substring(1));if("#"!==n){if(!s)return;o=i.getTopOf(s)}e.preventDefault();var c=function(){window.location=n},a=i.setup().edgeOffset;a&&(o=Math.max(0,o-a),c=function(){history.pushState(null,"",n)}),i.toY(o,null,c)}}},!1)}return i})}]);
+</script>
+<style>
+  #tocbot a.toc-link.node-name--H1{ font-style: italic }
+  @media screen{
+    #tocbot > ul.toc-list{ margin-bottom: 0.5em; margin-left: 0.125em }
+    #tocbot ul.sectlevel0, #tocbot a.toc-link.node-name--H1 + ul{
+      padding-left: 0 }
+    #tocbot a.toc-link{ height:90% }
+    .is-collapsible{ max-height:3000px; overflow:hidden; }
+    .is-collapsed{ max-height:0 }
+    .is-active-link{ font-weight:600 }
+    /* tocbot styling */
+    #tocbot .toc {
+        overflow-y: auto
+    }
+    #tocbot .toc>ul {
+        overflow: hidden;
+        position: relative
+    }
+    #tocbot .toc>ul li {
+        list-style: none
+    }
+    #tocbot .toc-list {
+        margin: 0;
+        padding-left: 10px
+    }
+    #tocbot a.toc-link {
+        color: #2156a5;
+        height: 90%
+    }
+    #tocbot .is-collapsible {
+        max-height: 1000px;
+        overflow: hidden;
+        transition: all 300ms ease-in-out
+    }
+    #tocbot .is-collapsed {
+        max-height: 0
+    }
+    #tocbot .is-position-fixed {
+        position: fixed !important;
+        top: 0
+    }
+    #tocbot .is-active-link {
+        font-weight: 700;
+        background-color: rgba(0, 0, 0, 0.1)
+    }
+    #tocbot .toc-link::before {
+        background-color: #EEE;
+        content: ' ';
+        display: inline-block;
+        height: inherit;
+        left: 0;
+        margin-top: -1px;
+        position: absolute;
+        width: 2px
+    }
+    #tocbot .is-active-link::before {
+        background-color: #7a2518;
+    }
+
+  }
+  @media print{
+    #tocbot a.toc-link.node-name--H4{ display:none }
+  }
+</style>
