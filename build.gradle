@@ -1,0 +1,70 @@
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+apply plugin: 'java'
+
+def getOsName(project) {
+	final String osName = System.getProperty("os.name").toLowerCase();
+
+	if (osName.contains("linux")) {
+		return ("linux");
+	} else if (osName.contains("mac os x") || osName.contains("darwin") || osName.contains("osx")) {
+		return ("macos");
+	} else if (osName.contains("windows")) {
+		return ("windows");
+	} else if (osName.contains("sunos") || osName.contains("solaris")) {
+		return ("solaris");
+	} else if (osName.contains("freebsd")) {
+		return ("freebsd");
+	}
+	return ("unix");
+}
+
+buildscript {
+apply plugin: 'java'
+
+	repositories {
+		mavenCentral()
+	}
+
+
+println "" + DefaultNativePlatform.getCurrentOperatingSystem().isWindows()
+println "" + DefaultNativePlatform.getCurrentOperatingSystem().isLinux()
+println "" + DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()
+
+//getOsName(project)
+
+	dependencies {
+		if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows()) {
+				classpath "com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0+"
+		} else if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux()) {
+				classpath "com.eclipsesource.j2v8:j2v8_linux_x86_64:4.8.0+"
+		} else if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()) {
+				classpath "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
+		}
+	}
+
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-webflux:2.3.4.RELEASE"
+
+	implementation "net.sf.jmimemagic:jmimemagic:0.1.5"
+	implementation "ch.qos.logback:logback-classic:1.2.3"
+
+	annotationProcessor "org.projectlombok:lombok:1.18.12"
+	implementation "org.projectlombok:lombok:1.18.12"
+
+	implementation "com.github.skjolber.jackson:jackson-syntax-highlight:1.0.5"
+
+	implementation "org.asciidoctor:asciidoctorj:2.4.1"
+	implementation "org.asciidoctor:asciidoctorj-diagram:2.0.5"
+
+	implementation "com.eclipsesource.j2v8:j2v8:6.2.0+"
+			implementation "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
+
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
