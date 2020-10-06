@@ -1,48 +1,8 @@
 import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
 
-apply plugin: 'java'
-
-def getOsName(project) {
-	final String osName = System.getProperty("os.name").toLowerCase();
-
-	if (osName.contains("linux")) {
-		return ("linux");
-	} else if (osName.contains("mac os x") || osName.contains("darwin") || osName.contains("osx")) {
-		return ("macos");
-	} else if (osName.contains("windows")) {
-		return ("windows");
-	} else if (osName.contains("sunos") || osName.contains("solaris")) {
-		return ("solaris");
-	} else if (osName.contains("freebsd")) {
-		return ("freebsd");
-	}
-	return ("unix");
-}
-
-buildscript {
-apply plugin: 'java'
-
-	repositories {
-		mavenCentral()
-	}
-
-
-println "" + DefaultNativePlatform.getCurrentOperatingSystem().isWindows()
-println "" + DefaultNativePlatform.getCurrentOperatingSystem().isLinux()
-println "" + DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()
-
-//getOsName(project)
-
-	dependencies {
-		if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows()) {
-				classpath "com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0+"
-		} else if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux()) {
-				classpath "com.eclipsesource.j2v8:j2v8_linux_x86_64:4.8.0+"
-		} else if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()) {
-				classpath "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
-		}
-	}
-
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
 }
 
 repositories {
@@ -64,7 +24,43 @@ dependencies {
 	implementation "org.asciidoctor:asciidoctorj-diagram:2.0.5"
 
 	implementation "com.eclipsesource.j2v8:j2v8:6.2.0+"
-			implementation "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
+	implementation "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
+
+	if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows()) {
+		implementation "com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0+"
+	} else if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux()) {
+		implementation "com.eclipsesource.j2v8:j2v8_linux_x86_64:4.8.0+"
+	} else if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()) {
+		implementation "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
+	}
+
+	implementation files('locallib/vizjs.jar')
 
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
+
+bootJar {
+	requiresUnpack '**/jruby-complete*.jar', '**/asciidoctorj-*.jar', '**/vizjs.jar'
+
+//	manifest {
+//		attributes 'Main-Class': 'org.springframework.boot.loader.PropertiesLauncher'
+//	}
+}
+
+bootRun {
+	systemProperty 'mytest', "12346"
+	systemProperties System.properties
+}
+
+//bootJar {
+//	enabled = false
+//}
+//jar {
+//	enabled = true
+//}
+
+// -Dloader.path=
+
+// -DGRAPHVIZ_DOT=vizjs
+
+

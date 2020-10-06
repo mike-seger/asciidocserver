@@ -12,7 +12,7 @@ public class TempFileUtils {
 	public File createTempDirWithId(String destinationId) {
 		return createTempDir(
 		getClass().getSimpleName() +
-		"-" + System.getProperty("sun.java.command") + destinationId);
+		"-" + System.getProperty("sun.java.command").replace('/', '-') + destinationId);
 	}
 
 	public File createTempDir(String dirname) {
