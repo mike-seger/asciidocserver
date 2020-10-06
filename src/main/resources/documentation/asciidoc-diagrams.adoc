@@ -1,11 +1,10 @@
 = AsciiDoc Diagram Examples
-
-link:quickref/asciidoc-syntax-quick-reference.adoc[Example AsciiDoc Quick Reference]
+:toclevels: 4
 
 == Sequence Diagrams
 === Styled
 ==== Colors
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-10", format="svg", opts="inline", height="100%", width="100%"]
 ----
 autonumber
 skinparam ParticipantPadding 20
@@ -49,7 +48,7 @@ deactivate M
 ----
 
 ==== Colors and Font
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-20", format="svg", opts="inline", height="100%", width="100%"]
 ----
 hide footbox
 skinparam shadowing false
@@ -132,11 +131,12 @@ end
 ----
 
 === Reverse Colors
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-30", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 
 skinparam monochrome reverse
+skinparam backgroundColor #ffffff
 
 actor User
 participant "First Class" as A
@@ -164,14 +164,17 @@ deactivate A
 ----
 
 === Handwritten
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-40", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 ' http://plantuml.com/skinparam.html
 skinparam handwritten true
 skinparam monochrome true
 skinparam packageStyle rect
-skinparam defaultFontName FG Virgil
+skinparam defaultFontName "FG Virgil"
+' skinparam defaultFontName "Bradley Hand"
+' skinparam defaultFontName Macshandwriting, "Bradley Hand", "FG Virgil", Dylan
+' skinparam defaultFontName Chalkduster
 skinparam shadowing false
 
 title Authentication Sequence
@@ -182,8 +185,81 @@ Bob->Alice: Authentication Response
 @enduml
 ----
 
+=== Complete Example
+[plantuml, "diagram-49", format="svg", opts="inline", height="100%", width="100%"]
+----
+@startuml
+header Facebook Authentication System
+title Facebook Authentication System
+footer Page no %page% of %lastpage%
+
+actor user #3c5a99
+participant WebBrowser as "Web Browser"
+box "Facebook server"
+    participant App as "Application"
+    participant AuthZ as "Authorization System"
+    database FCS as "Facebook Content System"
+end box
+
+== Basic flow ==
+
+activate user
+user -> WebBrowser : get FB resource
+    activate WebBrowser
+        WebBrowser -> App : request FB access
+        WebBrowser <-- App : <<http redirect>>
+        WebBrowser -[#red]> AuthZ : authorize
+        WebBrowser <-- AuthZ : permission form
+        user <-- WebBrowser : permission form
+    deactivate WebBrowser
+
+    user -> WebBrowser : user permission
+    activate WebBrowser
+        WebBrowser -> AuthZ : process permission
+        ... 5 minutes alter ...
+        WebBrowser <-- AuthZ : <<http redirect>>
+
+        == Authorization ==
+        alt permission granted
+            activate App
+                group
+                WebBrowser -> App : FB authorization code
+                        activate AuthZ
+                            App ->  AuthZ : FB authorization code
+                            App <--  AuthZ : FB authorization code
+                        deactivate AuthZ
+
+                        activate FCS
+                            App -> FCS : access FB user protected resource
+                            App <-- FCS : user protected resource
+                            note left FCS: Check with content system
+                        deactivate FCS
+                 end
+            deactivate App
+
+            WebBrowser <-- App : user protected resource
+            deactivate WebBrowser
+
+            user <-- WebBrowser  : user protected resource
+        else permission not granted
+            activate WebBrowser
+                activate App
+                    WebBrowser -> App : no authorization
+                    WebBrowser <-- App : FB resource not available
+                deactivate App
+            deactivate WebBrowser
+
+            user <-- WebBrowser  : FB resource not available
+        end
+    deactivate WebBrowser
+
+deactivate user
+@enduml
+----
+
+
 === Participant and Arrow Types
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-50", format="svg", opts="inline", height="100%", width="100%"]
 ----
 skinparam monochrome true
 actor Foo1
@@ -204,26 +280,9 @@ Foo1 <-> Foo5 : To database
 Foo1 <->o Foo6 : To collections
 ----
 
-=== Auto Numbering Options
-[plantuml, svg, opts="inline", height="100%", width="100%"]
-----
-header Page Header
-footer Page %page% of %lastpage%
-autonumber "<b>[000]"
-Bob -> Alice : Authentication Request
-Bob <- Alice : Authentication Response
-
-autonumber 15 "<b>(<u>##</u>)"
-Bob -> Alice : Another authentication Request
-Bob <- Alice : Another authentication Response
-
-autonumber 40 10 "<font color=red><b>Message 0  "
-Bob -> Alice : Yet another authentication Request
-Bob <- Alice : Yet another authentication Response
-----
-
-== ASCII Art Interaction Diagram
-[ditaa, svg, height="100%", width="100%"]]
+== DITAA Diagram
+=== Basic showcase
+[ditaa, "diagram-70", format="svg", opts="inline", height="100%", width="100%"]]
 ----
                    +-------------+
                    | Asciidoctor |-------+
@@ -241,103 +300,882 @@ Bob <- Alice : Yet another authentication Response
      :                                   ^
      |          Lots of work             |
      +-----------------------------------+
+
+
+/-----------------\            Color codes
+| Things to do    |            /-------------+-------------\
+| cGRE            |            |cRED RED     |cBLU BLU     |
+| o Cut the grass |            +-------------+-------------+
+| o Buy jam       |            |cGRE GRE     |cPNK PNK     |
+| o Fix car       |            +-------------+-------------+
+| o Make website  |            |cBLK BLK     |cYEL YEL     |
+\-----------------/            \-------------+-------------/
 ----
 
-== Tree
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+=== Alternative Example
+[ditaa, "diagram-71", format="svg", opts="inline", height="100%", width="100%"]]
 ----
-skinparam Legend {
-	BackgroundColor transparent
-	BorderColor transparent
-}
-legend
-Root
-|_ Element 1
-  |_ Element 1.1
-  |_ Element 1.2
-|_ Element 2
-  |_ Element 2.1
-end legend
+     Start
+       |
+       V
+  +----+-----+       +--------------+            +-----+
+  | cf3f     |       | {io}         |  3) done   | cGRE|
+  | check in +------>+ show choices +----------->+ END |
+  |          |       | c333         |            |     |
+  +----------+       +--+--------+--+            +-----+
+                        |        |  2) Share Facebook
+         1) Add Details |        \--------\
+                        V                 |
+                   +----+----+            V
+                   |         |        +---+---+
+                   + details +        |       |
+                   | cORA    |        + share +
+                   +----+----+        | cBLU  |        +----------+
+                        |             +---+---+        |     c666 |
+                        |      +-----+    |            |   +------+
+                        |      | cGRE|    |            |   | c333 |
+                        \----->+ END +<---/            +---+------+
+                               |     |                 |  c000    |
+                               +-----+                 +----------+
 ----
 
-== GraphViz Ethane Molecule
-[graphviz, svg, opts="inline", height="100%", width="100%"]
+== GraphViz
+=== State Transition
+
+[graphviz, "diagram-90", format="svg", opts="inline", height="50%", width="50%"]
+:width100: 450
+:width50: 275
+:width25: 137
 ----
-graph ethane {
-     C_0 -- H_0 [type=s];
-     C_0 -- H_1 [type=s];
-     C_0 -- H_2 [type=s];
-     C_0 -- C_1 [type=s];
-     C_1 -- H_3 [type=s];
-     C_1 -- H_4 [type=s];
-     C_1 -- H_5 [type=s];
+digraph automata_0 {
+#    size = "1, 1.5";
+    node [shape = circle];
+    0 [style = filled, color = lightgrey];
+    2 [shape = doublecircle];
+    0-> 2 [label = "a"];
+    0-> 1 [label = "other"];
+    1-> 2 [label = "a"];
+    1-> 1 [label = "other"];
+    2-> 2 [label = "a"];
+    2-> 1 [label = "other"];
+    "Machine: a" [shape = plaintext];
 }
+----
+
+
+=== Neural Networks
+==== 1
+[graphviz, "diagram-91", format="svg", opts="inline", height="100%", width="100%"]
+----
+digraph G {
+    rankdir=LR
+    splines=line
+    node [fixedsize=true, label=""];
+
+    subgraph cluster_0 {
+        color=white;
+        node [style=solid,color=blue4, shape=circle];
+        x1 x2 x3;
+        label = "layer 1 (Input layer)";
+    }
+
+	subgraph cluster_1 {
+		color=white;
+		node [style=solid,color=red2, shape=circle];
+		a12 a22 a32;
+		label = "layer 2 (hidden layer)";
+	}
+
+	subgraph cluster_2 {
+		color=white;
+		node [style=solid,color=seagreen2, shape=circle];
+		O;
+		label="layer 3 (output layer)";
+	}
+
+    x1 -> a12;
+    x1 -> a22;
+    x1 -> a32;
+    x2 -> a12;
+    x2 -> a22;
+    x2 -> a32;
+    x3 -> a12;
+    x3 -> a22;
+    x3 -> a32;
+
+    a12 -> O
+    a22 -> O
+    a32 -> O
+}
+----
+
+==== 2
+[graphviz, "diagram-92", format="svg", opts="inline", height="100%", width="100%"]
+----
+digraph graphname {
+    graph [rankdir="LR" ranksep="3.0"]
+    node [style=filled];
+    edge [penwidth="0.5" color="#e0e0e0"];
+
+    0.1 [fillcolor="cadetblue"];
+    0.2 [fillcolor="coral"];
+    0.3 [fillcolor="green"];
+    0.4 [fillcolor="gold"];
+    0.6 [fillcolor="cyan"];
+
+    1.0 [margin=0.4];
+    1.1 [margin=0.4];
+    1.2 [margin=0.4];
+    1.3 [margin=0.4];
+    1.4 [margin=0.4];
+
+    0.0 -> 1.0;
+    0.1 -> 1.0 [color="cadetblue1" penwidth="1"];
+    0.2 -> 1.0 [color="coral2" penwidth="2"];
+    0.3 -> 1.0 [color="green3" penwidth="6"];
+    0.4 -> 1.0 [color="gold4" penwidth="8"];
+    0.5 -> 1.0;
+    0.6 -> 1.0;
+    0.7 -> 1.0;
+    0.8 -> 1.0;
+    0.9 -> 1.0;
+    0.10 -> 1.0;
+    0.11 -> 1.0;
+    0.12 -> 1.0;
+    0.13 -> 1.0;
+    0.0 -> 1.1;
+    0.1 -> 1.1 [color="cadetblue2" penwidth="2"];
+    0.2 -> 1.1 [color="coral3" penwidth="5"];
+    0.3 -> 1.1 [color="green4" penwidth="8"];
+    0.4 -> 1.1;
+    0.5 -> 1.1 [color="cyan1" penwidth="1"];
+    0.6 -> 1.1;
+    0.7 -> 1.1;
+    0.8 -> 1.1;
+    0.9 -> 1.1;
+    0.10 -> 1.1;
+    0.11 -> 1.1;
+    0.12 -> 1.1;
+    0.13 -> 1.1;
+    0.0 -> 1.2;
+    0.1 -> 1.2 [color="cadetblue3"  penwidth="3"];
+    0.2 -> 1.2 [color="coral4"  penwidth="6"];
+    0.3 -> 1.2;
+    0.4 -> 1.2 [color="gold1" penwidth="1"];
+    0.5 -> 1.2 [color="cyan2" penwidth="2"];
+    0.6 -> 1.2;
+    0.7 -> 1.2;
+    0.8 -> 1.2;
+    0.9 -> 1.2;
+    0.10 -> 1.2;
+    0.11 -> 1.2;
+    0.12 -> 1.2;
+    0.13 -> 1.2;
+    0.0 -> 1.3;
+    0.1 -> 1.3 [color="cadetblue4" penwidth="4"];
+    0.2 -> 1.3;
+    0.3 -> 1.3 [color="green1" penwidth="1"];
+    0.4 -> 1.3 [color="gold2" penwidth="2"];
+    0.5 -> 1.3 [color="cyan3" penwidth="3"];
+    0.6 -> 1.3;
+    0.7 -> 1.3;
+    0.8 -> 1.3;
+    0.9 -> 1.3;
+    0.10 -> 1.3;
+    0.11 -> 1.3;
+    0.12 -> 1.3;
+    0.13 -> 1.3;
+    0.0 -> 1.4;
+    0.1 -> 1.4 [color="cadetblue4"  penwidth="2"];
+    0.2 -> 1.4 [color="coral4" penwidth="2"];
+    0.3 -> 1.4 [color="green4" penwidth="2"];
+    0.4 -> 1.4 [color="gold4" penwidth="2"];
+    0.5 -> 1.4 [color="cyan4" penwidth="2"];
+    0.6 -> 1.4;
+    0.7 -> 1.4;
+    0.8 -> 1.4;
+    0.9 -> 1.4;
+    0.10 -> 1.4;
+    0.11 -> 1.4;
+    0.12 -> 1.4;
+    0.13 -> 1.4;
+    1.0 -> 2.0;
+    1.1 -> 2.0;
+    1.2 -> 2.0;
+    1.3 -> 2.0;
+    1.4 -> 2.0;
+}
+----
+
+==== 3
+[graphviz, "diagram-93", format="svg", opts="inline", height="100%", width="100%"]
+----
+digraph G {
+    rankdir = LR;
+    splines=false;
+    edge[style=invis];
+    ranksep= 1.4;
+    {
+        node [shape=circle, color=yellow, style=filled, fillcolor=yellow];
+        x0 [label=<x<sub>0</sub>>];
+        a02 [label=<a<sub>0</sub><sup>(2)</sup>>];
+        a03 [label=<a<sub>0</sub><sup>(3)</sup>>];
+    }
+
+    {
+    node [shape=circle, color=chartreuse, style=filled, fillcolor=chartreuse];
+        x1 [label=<x<sub>1</sub>>];
+        x2 [label=<x<sub>2</sub>>];
+        x3 [label=<x<sub>3</sub>>];
+    }
+
+    {
+        node [shape=circle, color=dodgerblue, style=filled, fillcolor=dodgerblue];
+        a12 [label=<a<sub>1</sub><sup>(2)</sup>>];
+        a22 [label=<a<sub>2</sub><sup>(2)</sup>>];
+        a32 [label=<a<sub>3</sub><sup>(2)</sup>>];
+        a42 [label=<a<sub>4</sub><sup>(2)</sup>>];
+        a52 [label=<a<sub>5</sub><sup>(2)</sup>>];
+        a13 [label=<a<sub>1</sub><sup>(3)</sup>>];
+        a23 [label=<a<sub>2</sub><sup>(3)</sup>>];
+        a33 [label=<a<sub>3</sub><sup>(3)</sup>>];
+        a43 [label=<a<sub>4</sub><sup>(3)</sup>>];
+        a53 [label=<a<sub>5</sub><sup>(3)</sup>>];
+    }
+
+    {
+        node [shape=circle, color=coral1, style=filled, fillcolor=coral1];
+        O1 [label=<a<sub>1</sub><sup>(4)</sup>>];
+        O2 [label=<a<sub>2</sub><sup>(4)</sup>>];
+        O3 [label=<a<sub>3</sub><sup>(4)</sup>>];
+        O4 [label=<a<sub>4</sub><sup>(4)</sup>>];
+    }
+
+    {
+        rank=same;
+        x0->x1->x2->x3;
+    }
+
+    {
+        rank=same;
+        a02->a12->a22->a32->a42->a52;
+    }
+
+    {
+        rank=same;
+        a03->a13->a23->a33->a43->a53;
+    }
+
+    {
+        rank=same;
+        O1->O2->O3->O4;
+    }
+
+    a02->a03;  // prevent tilting
+    l0 [shape=plaintext, label="layer 1 (input layer)"];
+    l0->x0;
+    {rank=same; l0;x0};
+    l1 [shape=plaintext, label="layer 2 (hidden layer)"];
+    l1->a02;
+    {rank=same; l1;a02};
+    l2 [shape=plaintext, label="layer 3 (hidden layer)"];
+    l2->a03;
+    {rank=same; l2;a03};
+    l3 [shape=plaintext, label="layer 4 (output layer)"];
+    l3->O1;
+    {rank=same; l3;O1};
+    edge[style=solid, tailport=e, headport=w];
+    {x0; x1; x2; x3} -> {a12;a22;a32;a42;a52};
+    {a02;a12;a22;a32;a42;a52} -> {a13;a23;a33;a43;a53};
+    {a03;a13;a23;a33;a43;a53} -> {O1,O2,O3,O4};
+}
+----
+
+==== 4
+[graphviz, "diagram-94", format="svg", opts="inline", height="100%", width="100%"]
+----
+digraph G {
+  concentrate=True;
+  rankdir=TB;
+  node [shape=record];
+  140087530674552 [label="title: InputLayer\n|{input:|output:}|{{[(?, ?)]}|{[(?, ?)]}}"];
+  140087537895856 [label="body: InputLayer\n|{input:|output:}|{{[(?, ?)]}|{[(?, ?)]}}"];
+  140087531105640 [label="embedding_2: Embedding\n|{input:|output:}|{{(?, ?)}|{(?, ?, 64)}}"];
+  140087530711024 [label="embedding_3: Embedding\n|{input:|output:}|{{(?, ?)}|{(?, ?, 64)}}"];
+  140087537980360 [label="lstm_2: LSTM\n|{input:|output:}|{{(?, ?, 64)}|{(?, 128)}}"];
+  140087531256464 [label="lstm_3: LSTM\n|{input:|output:}|{{(?, ?, 64)}|{(?, 32)}}"];
+  140087531106200 [label="tags: InputLayer\n|{input:|output:}|{{[(?, 12)]}|{[(?, 12)]}}"];
+  140087530348048 [label="concatenate_1: Concatenate\n|{input:|output:}|{{[(?, 128), (?, 32), (?, 12)]}|{(?, 172)}}"];
+  140087530347992 [label="priority: Dense\n|{input:|output:}|{{(?, 172)}|{(?, 1)}}"];
+  140087530711304 [label="department: Dense\n|{input:|output:}|{{(?, 172)}|{(?, 4)}}"];
+  140087530674552 -> 140087531105640;
+  140087537895856 -> 140087530711024;
+  140087531105640 -> 140087537980360;
+  140087530711024 -> 140087531256464;
+  140087537980360 -> 140087530348048;
+  140087531256464 -> 140087530348048;
+  140087531106200 -> 140087530348048;
+  140087530348048 -> 140087530347992;
+  140087530348048 -> 140087530711304;
+}
+----
+
+=== Critical Path
+[graphviz, "diagram-95", format="svg", opts="inline", height="100%", width="100%"]
+----
+digraph G {
+    node [shape = "circle", width = "0.3",
+        style = "setlinewidth (2), filled" color = "black",
+        fillcolor = "pink", label = ""];
+    edge [fontname = "Helvetica-Bold", fontsize = "16", style = "bold"];
+    graph [rankdir = "LR", ranksep = "0.4"];
+    {rank = same; B; D;}
+
+    A-> B [label = "3", color = "red"];
+    B-> C [label = "2"];
+    B-> E [label = "1", color = "red"];
+    E-> C [label = "3", color = "red"];
+    A-> D [label = "2"];
+    D-> C [label = "3"];
+}
+----
+
+=== Red Black Tree
+[graphviz, "diagram-96", format="svg", opts="inline", height="100%", width="100%"]
+----
+digraph G {
+	graph [ratio=.48];
+	node [style=filled, color=black, shape=circle, width=.6
+		fontname=Helvetica, fontweight=bold, fontcolor=white,
+		fontsize=24, fixedsize=true];
+	{rank = same; n1; 6; n4; n5; n6; n7; 22; 27};
+
+	6, 8, 17, 22, 27
+	[fillcolor=red];
+
+	n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11
+	[label="NIL", shape=record, width=.4,height=.25, fontsize=16];
+
+	13 -> 8, 17;
+	8 -> 1 [weight=6];
+	8 -> 11 [weight=5];
+	17 -> 15 [weight=4];
+	17 -> 25 [weight=5];
+	1 -> n1 [weight=7];
+	1 -> 6;
+	11 -> n4 [weight=10];
+	11 -> n5 [weight=14];
+	6 -> n2, n3;
+	15 -> n6 [weight=14];
+	15 -> n7 [weight=10];
+	25 -> 22;
+	25 -> 27 [weight=6];
+	22 -> n8 [weight=5];
+	22 -> n9 [weight=3];
+	27 -> n10 [weight=3];
+	27 -> n11 [weight=5];
+}
+----
+
+== GNU Plot
+=== Sine Waves
+[gnuplot, "diagram-97", format=svg, opts="inline", subs="+attributes"]
+----
+reset
+
+# png
+#set terminal pngcairo size 350,262 enhanced font 'Verdana,10'
+#set output 'plotting_functions.png'
+
+set border linewidth 1.5
+# Set first two line styles to blue (#0060ad) and red (#dd181f)
+set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 2
+set style line 2 linecolor rgb '#dd181f' linetype 1 linewidth 2
+# Legend
+set key at 6.1,1.3
+# Axes label
+set xlabel 'x'
+set ylabel 'y'
+
+
+# Axis ranges
+set xrange[-2*pi:2*pi]
+set yrange[-1.5:1.5]
+# Axis labels
+set xtics ("-2Ï€" -2*pi, "-Ï€" -pi, 0, "Ï€" pi, "2Ï€" 2*pi)
+set ytics 1
+set tics scale 0.75
+# Functions to plot
+a = 0.9
+f(x) = a * sin(x)
+g(x) = a * cos(x)
+# Plot
+plot f(x) title 'sin(x)' with lines linestyle 1, \
+     g(x) notitle with lines linestyle 2
+----
+
+=== 3D Bars
+[gnuplot, "diagram-98", format=svg, opts="inline", subs="+attributes"]
+----
+# set terminal pngcairo  transparent enhanced font "arial,10" fontscale 1.0 size 600, 400
+# set output 'boxes3d.5.png'
+set boxwidth 0.4 absolute
+set boxdepth 0.3
+set style fill   solid 1.00 border
+set grid nopolar
+set grid xtics nomxtics ytics nomytics ztics nomztics nortics nomrtics \
+ nox2tics nomx2tics noy2tics nomy2tics nocbtics nomcbtics
+set grid vertical layerdefault   lt 0 linecolor 0 linewidth 1.000,  lt 0 linecolor 0 linewidth 1.000
+unset key
+set wall z0  fc  rgb "slategrey"  fillstyle  transparent solid 0.50 border lt -1
+set view 59, 24, 1, 1
+set style data lines
+set xyplane at 0
+set title "give the boxes a 3D depth and correct depth sorting"
+set xrange [ * : * ] noreverse writeback
+set x2range [ * : * ] noreverse writeback
+set yrange [ 0.00000 : 6.00000 ] noreverse nowriteback
+set y2range [ * : * ] noreverse writeback
+set zrange [ * : * ] noreverse writeback
+set cbrange [ * : * ] noreverse writeback
+set rrange [ * : * ] noreverse writeback
+set pm3d depthorder base
+set pm3d interpolate 1,1 flush begin noftriangles border linewidth 1.000 dashtype solid corners2color mean
+rgbfudge(x) = x*51*32768 + (11-x)*51*128 + int(abs(5.5-x)*510/9.)
+ti(col) = sprintf("%d",col)
+NO_ANIMATION = 1
+## Last datafile plotted: "candlesticks.dat"
+splot for [col=1:5] '{docdir}/assets/data/candlesticks.dat' using 1:(col):(col*column(col)):(rgbfudge($1)) with boxes fc rgb variable
+----
+
+=== Fence Plots
+[gnuplot, "diagram-99", format=svg, opts="inline", subs="+attributes"]
+----
+unset hidden3d
+
+#
+# 2) Each fence is a curve drawn with zerrorfill
+#    surface appearance is controlled by "set pm3d" and "set style fill"
+#    If depth-cueing is needed, use "set pm3d depthorder"
+#
+set format z "%.1f"
+unset key
+unset arrow
+unset label
+set view 70,25
+unset xtics
+unset ytics
+set title "fence plot constructed with zerrorfill"
+set zrange [-1:1]
+set arrow 1 from 5,-.5,-1.2 to 5,.5,-1.2 lt -1
+set label 1 "sampling on Y" at 6,-0.1,-1
+set xlabel "X axis"  rotate parallel
+set xrange [-5:4]
+set yrange [-0.5:0.5]
+sinc(u,v) = sin(sqrt(u**2+v**2)) / sqrt(u**2+v**2)
+
+set style fill  solid 0.75 noborder
+splot for [x=-4:4][y=-50:50:3] '+' using (x):($1/100.):(-1):(-1):(sinc($1/10., 1.+x)) with zerrorfill
+----
+
+=== Voxel Plot
+[gnuplot, "diagram-100", format=svg, opts="inline", subs="+attributes"]
+----
+#
+# Demo for direct plotting of voxel data
+#    splot $voxelgrid with {dots|points}
+#
+if (!exists("VoxelDistance")) exit
+
+set border 0
+set xzeroaxis; set yzeroaxis; set zzeroaxis;
+set label 1 "X" at 4.1, 0, 0
+set label 2 "Y" at 0, 4.1, 0
+set label 3 "Z" at 0, 0, 4.1
+set tics axis nomirror
+set xyplane at 0
+set key opaque box
+set cblabel "$v201 voxel value" offset -6
+set view 203, 227, 1.75
+
+set palette cubehelix negative
+set cbrange [0:100]
+
+set xrange [-4:4]; set yrange [-4:4]; set zrange [-4:4]
+
+#
+# Radius 1 spheres around (-1,2,2) and (0,3,2) with values decreasing
+# linearly with distance from the center
+#
+set vgrid $v122 size 100
+set vxrange [-4:4]; set vyrange [-4:4]; set vzrange [-4:4]
+
+vfill '-' using 1:2:3:(1.):(100. * (1. - VoxelDistance))
+-1 2 2
+e
+
+set vgrid $v032 size 100
+set vxrange [-4:4]; set vyrange [-4:4]; set vzrange [-4:4]
+
+vfill '-' using 1:2:3:(1.):(100. * (1. - VoxelDistance))
+0 3 2
+e
+
+#
+# Radius 2 sphere around (2,0,1) with values decreasing exponentially
+# with distance from the center
+# NB: vgrid range is different from the plot range
+#
+set vgrid $v201 size 25
+set vxrange [0:5]; set vyrange [-2.5:2.5]; set vzrange [-1:4]
+vfill '-' using 1:2:3:(2.):(40. * exp(1. - VoxelDistance))
+2 0 1
+e
+
+show vgrid
+set title "overlapping dot plots with constant color\n" \
+        . "point plot colored by exponentially decreasing voxel value"
+splot $v122 with dots above 0.01 lc "blue", \
+      $v032 with dots lc "red", \
+      $v201 with points pt 4 lc palette lw 0.33
+----
+
+=== Voxel Grid
+[gnuplot, "diagram-101", format=svg, opts="inline", subs="+attributes"]
+----
+# Demonstrate use of a voxel grid to assign color values to
+# components of a surface plot.
+#	splot with points
+#	splot with pm3d
+
+# test for voxel support in this copy of gnuplot
+if (!exists("VoxelDistance")) exit
+
+
+# load "{docdir}/assets/data/gen-random.inc"
+if (!exist("$random")) {
+    load "{docdir}/assets/data/stat.inc"
+    nsamp = 3000
+    # Generate N random data points.
+    set print $random
+    do for [i=1:nsamp] {
+        print sprintf("%8.5g %8.5g %8.5g", invnorm(rand(0)), invnorm(rand(0)), invnorm(rand(0)))
+    }
+    unset print
+}
+
+unset key
+rlow = -4.0
+rhigh = 4.0
+set xrange [rlow:rhigh]; set yrange [rlow:rhigh]; set zrange [rlow:rhigh]
+set xtics axis nomirror; set ytics axis nomirror; set ztics axis nomirror;
+set border 0
+set xyplane at 0
+set xzeroaxis lt -1; set yzeroaxis lt -1; set zzeroaxis lt -1;
+set view 68, 28, 1.6, 0.9
+tstring(n) = sprintf("Gaussian 3D cloud of %d random samples\ncolored by local point density", n)
+set title tstring(nsamp)
+
+set palette cubehelix negative
+set log cb; unset cbtics;
+set cblabel "point density"
+
+# define 100 x 100 x 100 voxel grid
+set vgrid $vdensity size 100
+vclear $vdensity
+
+# fill a spherical region around each point in $random
+vfill $random using 1:2:3:(0.33):(1.0)
+
+# Crashes in ascidiagram - why?
+# splot $random using 1:2:3:(voxel($1,$2,$3)) with points pt 7 ps 0.5 lc palette
+
+set title "step through volume using the density values to color a surface\n" \
+        . "splot '++' using 1:2:(z):(voxel($1,$2,z)) with pm3d"
+
+set view 48, 114
+set sample 50,50; set isosample 50,50
+set cbrange [1:40]
+set pm3d depthorder noborder interpolate 2,2
+set pm3d noclipcb
+set style fill transparent solid 0.5
+set obj 1 rectangle from screen 0,0,0 to screen 1,1,1 behind fs solid 1.0 fc "white"
+
+#
+# replot once with all three axis slices
+#
+set title "orthogonal slices through volume\n" \
+         . "using the density values to color the surfaces"
+splot '++' using 1:(0):2:(voxel($1,0,$2)) with pm3d, \
+      '++' using 1:2:(0):(voxel($1,$2,0)) with pm3d, \
+      '++' using (0):1:2:(voxel(0,$1,$2)) with pm3d
+
+----
+
+
+=== 4D data (3D Heat Map)
+[gnuplot, "diagram-103", format=svg, opts="inline", subs="+attributes"]
+----
+# set terminal pngcairo  transparent enhanced font "arial,10" fontscale 1.0 size 600, 400
+# set output 'heatmaps.6.png'
+set format cb "%4.1f"
+set view 49, 28, 1, 1.48
+set samples 25, 25
+set isosamples 50, 50
+set xyplane relative 0
+set cbtics border in scale 0,0 mirror norotate  autojustify
+set title "4D data (3D Heat Map)\nIndependent value color-mapped onto 3D surface"
+set title  offset character 0, 1, 0 font "" textcolor lt -1 norotate
+set urange [ 5.00000 : 35.0000 ] noreverse nowriteback
+set vrange [ 5.00000 : 35.0000 ] noreverse nowriteback
+set xlabel "x"
+set xlabel  offset character 3, 0, 0 font "" textcolor lt -1 norotate
+set xrange [ * : * ] noreverse writeback
+set x2range [ * : * ] noreverse writeback
+set ylabel "y"
+set ylabel  offset character -5, 0, 0 font "" textcolor lt -1 rotate
+set yrange [ * : * ] noreverse writeback
+set y2range [ * : * ] noreverse writeback
+set zlabel "z"
+set zlabel  offset character 2, 0, 0 font "" textcolor lt -1 norotate
+set zrange [ * : * ] noreverse writeback
+set cbrange [ * : * ] noreverse writeback
+set rrange [ * : * ] noreverse writeback
+set pm3d implicit at s
+set colorbox user
+set colorbox vertical origin screen 0.9, 0.2 size screen 0.03, 0.6 front  noinvert noborder
+sinc(x,y) = sin(sqrt((x-20.)**2+(y-20.)**2))/sqrt((x-20.)**2+(y-20.)**2)
+Z(x,y) = 100. * (sinc(x,y) + 1.5)
+color(x,y) = 10. * (1.1 + sin((x-20.)/5.)*cos((y-20.)/10.))
+NO_ANIMATION = 1
+## Last datafile plotted: "++"
+splot '++' using 1:2:(Z($1,$2)):(color($1,$2)) with pm3d title "4 data columns x/y/z/color"
+----
+
+=== PM3D surfaces with specular highlighting
+[gnuplot, "diagram-104", format=svg, opts="inline", subs="+attributes"]
+----
+set title "PM3D surfaces with specular highlighting"
+
+unset border
+unset key
+set object 1 rect from screen 0, 0, 0 to screen 1, 1, 0 behind
+set object 1 rect fc  rgb "gray"  fillstyle solid 1.0  border -1
+set view 236, 339, 1.245, 1.0
+set isosamples 75, 75
+unset xtics
+unset ytics
+unset ztics
+set parametric
+set dummy u,v
+set urange [ -pi : pi ]
+set vrange [ -pi : pi ]
+
+set palette rgbformulae 8, 9, 7
+set style fill solid 1.0 noborder
+set pm3d depthorder noborder
+set pm3d lighting specular 0.6
+
+splot cos(u)+.5*cos(u)*cos(v),sin(u)+.5*sin(u)*cos(v),.5*sin(v) with pm3d, \
+    1+cos(u)+.5*cos(u)*cos(v),.5*sin(v),sin(u)+.5*sin(u)*cos(v) with pm3d
+----
+
+=== Hidden Compare
+[gnuplot, "diagram-105", format=svg, opts="inline", subs="+attributes"]
+----
+# set terminal pngcairo  transparent enhanced font "arial,10" fontscale 1.0 size 600, 400
+# set output 'hidden_compare.1.png'
+unset border
+set dummy u, v
+unset key
+set parametric
+set view 225, 206, 1.25, 0.5
+set isosamples 200, 200
+set hidden3d back offset 1 trianglepattern 3 undefined 1 altdiagonal bentover
+set style data lines
+unset xtics
+unset ytics
+unset ztics
+set title "pm3d 2-color surface"
+set urange [ -3.14159 : 3.14159 ] noreverse nowriteback
+set vrange [ 0.250000 : 3.14159 ] noreverse nowriteback
+set xrange [ * : * ] noreverse writeback
+set x2range [ * : * ] noreverse writeback
+set yrange [ * : * ] noreverse writeback
+set y2range [ * : * ] noreverse writeback
+set zrange [ * : * ] noreverse writeback
+set cbrange [ * : * ] noreverse writeback
+set rrange [ * : * ] noreverse writeback
+set pm3d depthorder
+set pm3d lighting primary 0.33 specular 0.2 spec2 0.3
+unset colorbox
+NO_ANIMATION = 1
+splot (cos(u)+.5*cos(u)*cos(v))*(1.+sin(11.*u)/10.),       (sin(u)+.5*sin(u)*cos(v))*(1.+sin(11.*u)/10.),       0.5*sin(v) with pm3d fc ls 3
+----
+
+=== PM3D Lighting Model With Specular Highlighting
+[gnuplot, "diagram-106", format=svg, opts="inline", subs="+attributes"]
+----
+#
+# pm3d lighting model with specular highlighting
+#
+unset key
+unset border
+unset colorbox
+set view 33, 291, 1.2, 1.3
+set bmargin 0
+set tmargin 0
+set samples 200, 200
+set isosamples 200, 200
+set xyplane -0.05
+set format ""
+set grid x y lt black
+unset ztics
+set urange [ -20. : 20. ]
+set vrange [ -20. : 20. ]
+set zrange [ -0.25 : 0.5 ]
+
+set style fill solid 1.00 noborder
+set pm3d implicit at s depth noborder
+
+slice(x,y) = (x**2+y**2 < 10.0) ? 1.0 : (x**2+y**2 > 300.0) ? NaN : sin(abs(atan2(x,y)))
+sinc2(x,y) = sin(sqrt(x**2+y**2))/sqrt(x**2+y**2)
+flatten(x,y) = sqrt(x**2+y**2)/5.
+F(x,y) =  sinc2(x,y) * slice(x,y) * flatten(x,y)
+
+set title "pm3d lighting model with specular highlighting"
+set pm3d lighting primary 0.5 specular 0.2
+splot '++' using 1:2:(F($1,$2)):(0xAAEEEE) nosurface lc rgb variable
+----
+
+=== Viridis Colormap
+[gnuplot, "diagram-107", format=svg, opts="inline", subs="+attributes"]
+----
+#
+# Showcasing the viridis colormap
+#
+# AUTHOR: Hagen Wierstorf
+# gnuplot 5.0 patchlevel 3
+
+reset
+
+unset key
+
+# border
+set style line 11 lc rgb '#808080' lt 1
+set border 3 front ls 11
+set tics nomirror out scale 0.75
+
+# colorbar
+# disable colorbar tics
+set cbtics scale 0
+# viridis palette colors
+load '{docdir}/assets/data/viridis.pal'
+
+set xrange [0:59]
+set yrange [0:59]
+set xlabel 'x (Âµm)'
+set ylabel 'y (Âµm)'
+
+plot '{docdir}/assets/data/test_colormap.txt' u ($1/3.0):($2/3.0):($3/1000.0) matrix with image
 ----
 
 == Class Diagram
-["plantuml", svg, opts="inline", height="100%", width="100%"]
-----
-class BlockProcessor
-class DiagramBlock
-class DitaaBlock
-class PlantUmlBlock
+Link:https://plantuml.com/class-diagram[class-diagram]
 
-BlockProcessor <|-- DiagramBlock
-DiagramBlock <|-- DitaaBlock
-DiagramBlock <|-- PlantUmlBlock
-----
-
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+["plantuml", "diagram-108", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
+scale 2
 skinparam class {
-    BackgroundColor PaleGreen
-    ArrowColor SeaGreen
-    BorderColor SpringGreen
+    BackgroundColor #9cbed6
+'    ArrowColor SeaGreen
+'    BorderColor SpringGreen
 }
-skinparam stereotypeCBackgroundColor YellowGreen
+skinparam stereotypeCBackgroundColor White
+class Event {
+    +startTime: DateTime
+    +venue: string
+    +registrationClosed: boolean
+    -notifyAttendes()
+}
 
-Class01 "1" *-- "many" Class02 : contains
-Class03 o-- Class04 : aggregation
+class ApplicationUser {
+    -userName: string
+    -password: string
+    +isLocked: boolean
+    -suggestRandomPasswod()
+    +changeProfilePic()
+}
+
+class Speaker {
+    +openForSpeaking: boolean
+    -callForAction()
+    +applyAsSpokePerson()
+}
+
+class Topic {
+    +title: string
+    +sourceCodeUrl: string
+    +downloadMaterials()
+}
+
+class Attendee {
+    -eventAttended: number
+    -suggestEventBasedOnPreference()
+    +registerForTicket()
+}
+
+ApplicationUser <|-- Speaker
+ApplicationUser <|-- Attendee
+Speaker "1" *-- "*" Topic
+Event "1" o-- "*" Speaker
+Event "1" o-- "*" Attendee
 @enduml
 ----
 
-[graphviz, svg, opts="inline", height="100%", width="100%"]
+== E/R Diagram
+[plantuml, "diagram-110", format="svg", opts="inline", height="100%", width="100%"]
 ----
-digraph foo {
-  node [style=rounded]
-  node1 [shape=box]
-  node2 [fillcolor=yellow, style="rounded,filled", shape=diamond]
-  node3 [shape=record, label="{ a | b | c }"]
-   node1 -> node2 -> node3
-}
-----
+@startuml
 
-[plantuml, svg, opts="inline", height="100%", width="100%"]
-----
+    ' hide the spot
+    hide circle
 
+    ' avoid problems with angled crows feet
+    skinparam linetype ortho
 
-component asciidoctorj as adj
-component docToolChain as dtc
+    skinparam monochrome true
 
-file AsciiDoc as input
-file html
-file pdf
-file confluence
-file many_more
+    entity "Entity01" as e01 {
+        *e1_id : number <<generated>>
+        --
+        *name : text
+        description : text
+    }
 
-input -> adj
-adj -> dtc : "html,\ndocbook"
+    entity "Entity02" as e02 {
+        *e2_id : number <<generated>>
+        --
+        *e1_id : number <<FK>>
+        other_details : text
+    }
 
-adj --> html
-adj --> pdf
+    entity "Entity03" as e03 {
+        *e3_id : number <<generated>>
+        --
+        e1_id : number <<FK>>
+        other_details : text
+    }
 
-dtc --> confluence
-dtc --> many_more
+    e01 ||..o{ e02
+    e01 |o..o{ e03
+
+@enduml
 ----
 
 == Mind Map
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-140", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startmindmap
 * Debian
@@ -361,7 +1199,30 @@ dtc --> many_more
 ----
 
 == Flow Diagram
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+=== Variant 1
+[plantuml, "diagram-130", format="svg", opts="inline", height="100%", width="100%"]
+----
+component asciidoctorj as adj
+component docToolChain as dtc
+
+file AsciiDoc as input
+file html
+file pdf
+file confluence
+file many_more
+
+input -> adj
+adj -> dtc : "html,\ndocbook"
+
+adj --> html
+adj --> pdf
+
+dtc --> confluence
+dtc --> many_more
+----
+
+=== Variant 2
+[plantuml, "diagram-150", format="svg", opts="inline", height="100%", width="100%"]
 ----
 title Servlet Container
 
@@ -416,7 +1277,7 @@ endif
 
 == Math
 === Core
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-160", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 :<math>int_0^1f(x)dx</math>;
@@ -430,7 +1291,7 @@ end note
 ----
 
 === ASCII
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-170", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startmath
 f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
@@ -438,7 +1299,7 @@ f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
 ----
 
 === LaTEX
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-180", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startlatex
 \sum_{i=0}^{n-1} (a_i + b_i^2)
@@ -447,7 +1308,7 @@ f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
 
 == Gant Chart
 === Without Date
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-190", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startgantt
 [Prototype design] lasts 13 days and is colored in Lavender/LightBlue
@@ -460,7 +1321,7 @@ f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\ sin((npit)/L)
 ----
 
 === With Date
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-200", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startgantt
 Project starts the 5th of october 2023
@@ -476,7 +1337,7 @@ sunday are closed
 
 == Flow
 === Workflow
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-210", format="svg", opts="inline", height="100%", width="100%"]
 ----
 !MYFONT = "Arial"
 !MYBORDER = 2
@@ -529,7 +1390,7 @@ end
 ----
 
 === Workflow 2
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-220", format="svg", opts="inline", height="100%", width="100%"]
 ----
 scale 1.2
 skinparam shadowing false
@@ -585,7 +1446,7 @@ detach
 ----
 
 === State Diagram
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-230", format="svg", opts="inline", height="100%", width="100%"]
 ----
 skinparam state {
   BackgroundColor    lightblue
@@ -602,7 +1463,7 @@ app -r-> db : read and write \npersistent data
 ----
 
 === State Diagram Azure
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-240", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 
@@ -666,7 +1527,7 @@ Lay_D(search, webJob)
 
 
 === State Diagram Cloud Insight
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-250", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 
@@ -699,7 +1560,7 @@ daemon2 --> redis
 @enduml
 ----
 
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-260", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 footer Kubernetes Plant-UML
@@ -797,7 +1658,7 @@ Rel_U(KubernetesApi, acr, "docker pull")
 @enduml
 ----
 
-[plantuml, svg, opts="inline", height="100%", width="100%"]
+[plantuml, "diagram-270", format="svg", opts="inline", height="100%", width="100%"]
 ----
 @startuml
 skinparam DefaultTextAlignment center
@@ -931,3 +1792,165 @@ package "Inters" as p5 {
 p4 -[hidden]> p5
 @enduml
 ----
+
+== Salt Wireframe UI
+
+Link: https://plantuml.com/salt
+
+=== Full
+[plantuml, "diagram-290", format="svg", opts="inline", height="100%", width="100%"]
+----
+@startsalt
+{+
+
+{* File | Edit | Source | Refactor
+ Refactor | New | Open File | - | Close | <b>Close All</b> }
+
+    {/ <b>General | Fullscreen | Behavior | Saving }
+
+    {
+    Name         | "                 "
+    Direction:   | { (X) Left | () Right | () Up | () Down }
+    Attending?:  | {  [] Yes | [] No
+                      [] Maybe }
+    --|--
+        {}  | { [Browse...] | [OK <&account-login>] | [Cancel <&circle-x>] }}
+    }
+
+}
+@endsalt
+----
+
+=== Tree
+[plantuml, "diagram-300", format="svg", opts="inline", height="100%", width="100%"]
+----
+@startsalt
+
+{
+    {T
+     + Food
+     ++ Fruit
+     +++ Grape
+     +++ Orange
+     +++ Apple
+     ++++ Honey Crisp
+     ++++ Granny Smith
+     +++ Banana
+     ++ Vegetables
+     +++ Bell pepper
+     +++ Spinach
+     +++ Mushroom
+     ++++ Crimini
+     ++++ Shitaki
+    }
+}
+@endsalt
+----
+
+=== Tree Table
+[plantuml, "diagram-310", format="svg", opts="inline", height="100%", width="100%"]
+----
+@startsalt
+{
+{T
++Region        | Population    | Age
++ World        | 7.13 billion  | 30
+++ America     | 964 million   | 30
++++ Canada     | 35 million    | 30
++++ USA        | 319 million   | 30
+++++ NYC       | 8 million     | 30
+++++ Boston    | 617 thousand  | 30
++++ Mexico     | 117 million   | 30
+++ Europe      | 601 million   | 30
++++ Italy      | 61 million    | 30
++++ Germany    | 82 million    | 30
+++++ Berlin    | 3 million     | 30
+++ Africa      | 1 billion     | 30
+}
+}
+@endsalt
+----
+
+
+== Archimate
+
+Link: https://plantuml.com/archimate-diagram
+
+=== Example 1
+[plantuml, "diagram-330", format="svg", opts="inline", height="100%", width="100%"]
+----
+
+@startuml
+skinparam rectangle<<behavior>> {
+	roundCorner 25
+}
+sprite $bProcess jar:archimate/business-process
+sprite $aService jar:archimate/application-service
+sprite $aComponent jar:archimate/application-component
+
+rectangle "Handle claim"  as HC <<$bProcess>><<behavior>> #Business
+rectangle "Capture Information"  as CI <<$bProcess>><<behavior>> #Business
+rectangle "Notify\nAdditional Stakeholders" as NAS <<$bProcess>><<behavior>> #Business
+rectangle "Validate" as V <<$bProcess>><<behavior>> #Business
+rectangle "Investigate" as I <<$bProcess>><<behavior>> #Business
+rectangle "Pay" as P <<$bProcess>><<behavior>> #Business
+
+HC *-down- CI
+HC *-down- NAS
+HC *-down- V
+HC *-down- I
+HC *-down- P
+
+CI -right->> NAS
+NAS -right->> V
+V -right->> I
+I -right->> P
+
+rectangle "Scanning" as scanning <<$aService>><<behavior>> #Application
+rectangle "Customer admnistration" as customerAdministration <<$aService>><<behavior>> #Application
+rectangle "Claims admnistration" as claimsAdministration <<$aService>><<behavior>> #Application
+rectangle Printing <<$aService>><<behavior>> #Application
+rectangle Payment <<$aService>><<behavior>> #Application
+
+scanning -up-> CI
+customerAdministration  -up-> CI
+claimsAdministration -up-> NAS
+claimsAdministration -up-> V
+claimsAdministration -up-> I
+Payment -up-> P
+
+Printing -up-> V
+Printing -up-> P
+
+rectangle "Document\nManagement\nSystem" as DMS <<$aComponent>> #Application
+rectangle "General\nCRM\nSystem" as CRM <<$aComponent>>  #Application
+rectangle "Home & Away\nPolicy\nAdministration" as HAPA <<$aComponent>> #Application
+rectangle "Home & Away\nFinancial\nAdministration" as HFPA <<$aComponent>>  #Application
+
+DMS .up.|> scanning
+DMS .up.|> Printing
+CRM .up.|> customerAdministration
+HAPA .up.|> claimsAdministration
+HFPA .up.|> Payment
+
+legend left
+Example from the "Archisurance case study" (OpenGroup).
+See
+====
+<$bProcess> :business process
+====
+<$aService> : application service
+====
+<$aComponent> : application component
+endlegend
+@enduml
+----
+
+== General
+
+=== List Fonts
+[plantuml, "diagram-340", format="svg", opts="inline", height="100%", width="100%"]
+----
+listfonts
+----
+

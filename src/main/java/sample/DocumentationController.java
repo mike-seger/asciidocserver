@@ -1,10 +1,9 @@
 package sample;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.jmimemagic.*;
 import org.asciidoctor.*;
 import org.asciidoctor.jruby.AsciiDocDirectoryWalker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -26,8 +25,8 @@ import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping
+@Slf4j
 public class DocumentationController {
-    private final static Logger logger = LoggerFactory.getLogger(DocumentationController.class);
     private final File htmlDir;
 
     public DocumentationController(
@@ -35,11 +34,16 @@ public class DocumentationController {
             @Value("${asciidocserver.destination-id}") String destinationId
             ) throws IOException, URISyntaxException {
         long time = System.currentTimeMillis();
-        htmlDir = new TempFileUtils().createTempDir(
-                getClass().getSimpleName() +
-                        "-" + System.getProperty("sun.java.command") + destinationId);
+
+        //URL fontUrl=new URL(sourceUrl.toString()+"/assets/fg-virgil.ttf");
+        //URL fontUrl=getClass().getResource("/documentation/assets/fg-virgil.ttf");
+        //URL fontUrl=getClass().getResource("/documentation/assets/Another Birdhouse Light.ttf");
+        URL fontUrl=getClass().getResource("/documentation/assets/Dylan.ttf");
+
+        FontInstaller.installFont(fontUrl);
+        htmlDir = new TempFileUtils().createTempDirWithId(destinationId);
         boolean changed = ResourcesUtils.copyResourceLocation(sourceUrl, htmlDir.toPath());
-        logger.info("Finished Resource Sync ({}). Took {} ms", sourceUrl, System.currentTimeMillis() - time);
+        log.info("Finished Resource Sync ({}). Took {} ms", sourceUrl, System.currentTimeMillis() - time);
         if (changed) {
             processAsciiDoctor(htmlDir, null);
         }
@@ -63,7 +67,7 @@ public class DocumentationController {
                 while ((key = watcher.take()) != null) {
                     ResourcesUtils.copyResourceLocation(sourceUrl, htmlDir.toPath());
                     for (WatchEvent<?> event : key.pollEvents()) {
-                        logger.info("Event kind: {}. File affected: {} ({}).",
+                        log.info("Event kind: {}. File affected: {} ({}).",
                             event.kind(), event.context(), event.context().getClass() );
                         if(event.context() instanceof Path) {
                             String name=(((Path) event.context()).toFile()).getName();
@@ -76,13 +80,13 @@ public class DocumentationController {
                 }
             }
         } catch (Exception e) {
-            logger.error("Error watching path: {}", path, e);
+            log.error("Error watching path: {}", path, e);
         }
     }
 
     private static synchronized void processAsciiDoctor(File htmlDir, File singleDoc) throws IOException {
         long time = System.currentTimeMillis();
-        logger.info("Started asciidoctor");
+        log.info("Started asciidoctor");
         try (Asciidoctor asciidoctor = Asciidoctor.Factory.create()) {
             asciidoctor.requireLibrary("asciidoctor-diagram");
             String imageDirName = "images";
@@ -113,10 +117,14 @@ public class DocumentationController {
                     convertAsciiDoc(asciidoctor, f, optionsBuilder);
             }
         }
-        logger.info("Finished asciidoctor. Took {} ms", System.currentTimeMillis()-time);
+        log.info("Finished asciidoctor. Took {} ms", System.currentTimeMillis()-time);
     }
 
     private static void convertAsciiDoc(Asciidoctor asciidoctor, File asciiDoc, OptionsBuilder optionsBuilder) throws IOException {
+        if(!asciiDoc.isFile()) {
+            log.warn("Not converting non-file: {}", asciiDoc);
+            return;
+        }
         File htmlFile=new File(asciiDoc.getParent(), asciiDoc.getName()+".html");
         try (Reader r=new FileReader(asciiDoc)) {
             optionsBuilder.baseDir(asciiDoc.getParentFile());

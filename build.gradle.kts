@@ -22,8 +22,10 @@ dependencies {
 	implementation("net.sf.jmimemagic:jmimemagic:0.1.5")
 	implementation("ch.qos.logback:logback-classic:1.2.3")
 
-//	annotationProcessor("org.projectlombok:lombok")
-//	implementation("org.projectlombok:lombok:1.18.12")
+	annotationProcessor("org.projectlombok:lombok")
+	implementation("org.projectlombok:lombok:1.18.12")
+
+	implementation ("com.github.skjolber.jackson:jackson-syntax-highlight:1.0.5")
 
 	implementation("org.asciidoctor:asciidoctorj:2.4.1")
 	implementation("org.asciidoctor:asciidoctorj-diagram:2.0.5")

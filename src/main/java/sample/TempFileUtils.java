@@ -5,7 +5,17 @@ import java.io.File;
 public class TempFileUtils {
 	private final static File sysTempDir = new File(System.getProperty("java.io.tmpdir"));
 
-    public File createTempDir(String dirname) {
+	public File createTempDirWithId() {
+		return createTempDirWithId("-default");
+	}
+
+	public File createTempDirWithId(String destinationId) {
+		return createTempDir(
+		getClass().getSimpleName() +
+		"-" + System.getProperty("sun.java.command") + destinationId);
+	}
+
+	public File createTempDir(String dirname) {
     	if(!sysTempDir.exists()) {
     		throw new RuntimeException("Could not find system temp dir: "+sysTempDir.getAbsolutePath());
 	    }

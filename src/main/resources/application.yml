@@ -3,7 +3,7 @@ server:
 
 asciidocserver:
 #  source-url: classpath:/documentation
-  source-url: file:${PWD}/src/main/resources/documentation
+  source-url: file:${user.dir}/src/main/resources/documentation
   destination-id: 1
 
 spring:
@@ -12,3 +12,4 @@ spring:
 
 logging.level:
   net.sf.jmimemagic.MagicParser: warn
+  sample.PropertiesDumper: debug
