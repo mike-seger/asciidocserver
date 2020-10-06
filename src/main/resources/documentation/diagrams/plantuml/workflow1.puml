@@ -1,0 +1,48 @@
+!MYFONT = "Arial"
+!MYBORDER = 2
+skinparam defaultTextAlignment center
+!MY0 = "#eeeeee"
+!MY1 = "steelblue"
+!MY2 = "#aaffff"
+!MY3 = "wheat"
+skinparam activity {
+BackgroundColor         MY1
+BorderColor             MY3
+BorderThickness         MYBORDER
+DiamondBackgroundColor  MY1
+DiamondBorderColor      MY3
+DiamondFontColor        MY2
+DiamondFontName         MYFONT
+DiamondFontSize         15
+DiamondBorderThickness  MYBORDER
+FontColor               MY0
+FontName                MYFONT
+FontSize                15
+ArrowColor              gray
+ArrowFontColor          MY1
+ArrowFontName           MYFONT
+ArrowFontSize           15
+StartColor              MY1
+EndColor                MY1
+}
+
+Title Issue Workflow\n
+start
+:Is it a real issue?;
+:Talk with other engineers\nand teams to check if it's\na real issue;
+if (Decide if the issue must be\ntracked as Defect) then ( NO )
+ :Create a different backlog\n(Story or Task) to track in Jira;
+else ( YES )
+ if (Query Jira to see if same or\nsimilar issue has been open) then ( NO )
+  :Gather information\nabout the issue;
+  :Create Bug type issue\nin Jira and provide\nall gathered information;
+  if (Is this issue high severity?) then ( YES )
+    :Inform stakeholders or\nengineers that the issue\nis concerning;
+   else ( NO )
+   endif
+ else ( YES )
+  :Update the issue with\ncomment that you hit the\nsame issue;
+  :Inform stakeholders or\nengineers that the issue\nis hit more than once;
+ endif
+endif
+end

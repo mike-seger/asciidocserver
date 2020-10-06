@@ -1,0 +1,19 @@
+@startmindmap
+* Debian
+**[#Orange] Ubuntu
+*** Linux Mint
+***[#lightgreen] Kubuntu
+*** Lubuntu
+*** KDE Neon
+**[#lightblue] LMDE
+** SolydXK
+** SteamOS
+**[#FFBBCC] Raspbian with a very long name
+*** <s>Raspmbc</s> => OSMC
+*** <s>Raspyfi</s> => Volumio
+-- Windows 95
+-- Windows 98
+-- Windows NT
+--- Windows 8
+--- Windows 10
+@endmindmap

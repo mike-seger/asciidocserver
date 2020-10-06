@@ -1,0 +1,40 @@
+autonumber
+skinparam ParticipantPadding 20
+skinparam BoxPadding 20
+
+skinparam sequence {
+    ArrowColor #383b45
+    ActorBorderColor #383b45
+    LifeLineBorderColor #383b45
+    LifeLineBackgroundColor #cccccc
+
+    ParticipantBorderColor #3b4283
+    ParticipantFontSize 14
+    ParticipantFontColor #ffffff
+
+    ActorBackgroundColor #cccccc
+    ActorFontColor #383b45
+    ActorFontSize 14
+    ActorFontName Aapex
+}
+
+box "Box Foo1"
+participant "Participant\n1" as L #5b82a3
+participant "Participant\n2" as M #5b82a3
+end box
+participant "Participant\n3" as N #5b82a3
+
+L -> M: Authentication Request
+activate M
+M -> N: Authentication Request
+activate N
+M <-- N: Authentication Response
+deactivate N
+M --> L: Authentication Response
+deactivate M
+L -> M: Another authentication Request
+activate M
+M -> M: Loopback
+M --> L: Another authentication Response
+deactivate M
+

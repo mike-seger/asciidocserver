@@ -1,0 +1,10 @@
+@startgantt
+Project starts the 5th of october 2023
+saturday are closed
+sunday are closed
+2023/11/11 is opened
+[P_start] happens 2023-10-05
+[Prototype design] lasts 21 days
+[Test prototype] starts at [Prototype design]'s end and lasts 2 weeks
+[P_end]   happens 2023-11-15
+@endgantt

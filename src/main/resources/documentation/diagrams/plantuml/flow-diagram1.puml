@@ -1,0 +1,17 @@
+component asciidoctorj as adj
+component docToolChain as dtc
+
+file AsciiDoc as input
+file html
+file pdf
+file confluence
+file many_more
+
+input -> adj
+adj -> dtc : "html,\ndocbook"
+
+adj --> html
+adj --> pdf
+
+dtc --> confluence
+dtc --> many_more

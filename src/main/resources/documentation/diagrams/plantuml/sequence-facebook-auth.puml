@@ -1,0 +1,67 @@
+@startuml
+header Facebook Authentication System
+title Facebook Authentication System
+footer Page no %page% of %lastpage%
+
+actor user #3c5a99
+participant WebBrowser as "Web Browser"
+box "Facebook server"
+    participant App as "Application"
+    participant AuthZ as "Authorization System"
+    database FCS as "Facebook Content System"
+end box
+
+== Basic flow ==
+
+activate user
+user -> WebBrowser : get FB resource
+    activate WebBrowser
+        WebBrowser -> App : request FB access
+        WebBrowser <-- App : <<http redirect>>
+        WebBrowser -[#red]> AuthZ : authorize
+        WebBrowser <-- AuthZ : permission form
+        user <-- WebBrowser : permission form
+    deactivate WebBrowser
+
+    user -> WebBrowser : user permission
+    activate WebBrowser
+        WebBrowser -> AuthZ : process permission
+        ... 5 minutes alter ...
+        WebBrowser <-- AuthZ : <<http redirect>>
+
+        == Authorization ==
+        alt permission granted
+            activate App
+                group
+                WebBrowser -> App : FB authorization code
+                        activate AuthZ
+                            App ->  AuthZ : FB authorization code
+                            App <--  AuthZ : FB authorization code
+                        deactivate AuthZ
+
+                        activate FCS
+                            App -> FCS : access FB user protected resource
+                            App <-- FCS : user protected resource
+                            note left FCS: Check with content system
+                        deactivate FCS
+                 end
+            deactivate App
+
+            WebBrowser <-- App : user protected resource
+            deactivate WebBrowser
+
+            user <-- WebBrowser  : user protected resource
+        else permission not granted
+            activate WebBrowser
+                activate App
+                    WebBrowser -> App : no authorization
+                    WebBrowser <-- App : FB resource not available
+                deactivate App
+            deactivate WebBrowser
+
+            user <-- WebBrowser  : FB resource not available
+        end
+    deactivate WebBrowser
+
+deactivate user
+@enduml

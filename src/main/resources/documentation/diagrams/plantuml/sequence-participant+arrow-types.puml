@@ -1,0 +1,17 @@
+skinparam monochrome true
+actor Foo1
+boundary Foo2
+control Foo3
+entity Foo4
+database Foo5
+collections Foo6
+Foo1 ->x Foo2 : To boundary
+Foo1 -> Foo3 : To control
+Foo1 ->> Foo4 : To entity
+Foo1 -\ Foo5 : To database
+Foo1 \\- Foo6 : To collections
+Foo1 //-- Foo2 : To boundary
+Foo1 ->o Foo3 : To control
+Foo1 o\\-- Foo4 : To entity
+Foo1 <-> Foo5 : To database
+Foo1 <->o Foo6 : To collections

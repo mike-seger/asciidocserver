@@ -65,16 +65,20 @@ public class DocumentationController {
 
                 WatchKey key;
                 while ((key = watcher.take()) != null) {
-                    ResourcesUtils.copyResourceLocation(sourceUrl, htmlDir.toPath());
-                    for (WatchEvent<?> event : key.pollEvents()) {
-                        log.info("Event kind: {}. File affected: {} ({}).",
-                            event.kind(), event.context(), event.context().getClass() );
-                        if(event.context() instanceof Path) {
-                            String name=(((Path) event.context()).toFile()).getName();
-                            processAsciiDoctor(htmlDir, new File(htmlDir, name));
-                        }  else {
-                            processAsciiDoctor(htmlDir, null);
+                    try {
+                        ResourcesUtils.copyResourceLocation(sourceUrl, htmlDir.toPath());
+                        for (WatchEvent<?> event : key.pollEvents()) {
+                            log.info("Event kind: {}. File affected: {} ({}).",
+                                event.kind(), event.context(), event.context().getClass());
+                            if (event.context() instanceof Path) {
+                                String name = (((Path) event.context()).toFile()).getName();
+                                processAsciiDoctor(htmlDir, new File(htmlDir, name));
+                            } else {
+                                processAsciiDoctor(htmlDir, null);
+                            }
                         }
+                    } catch (Exception e) {
+                        log.error("Error occurred processing file", e);
                     }
                     key.reset();
                 }

@@ -1,0 +1,32 @@
+digraph G {
+	graph [ratio=.48];
+	node [style=filled, color=black, shape=circle, width=.6
+		fontname=Helvetica, fontweight=bold, fontcolor=white,
+		fontsize=24, fixedsize=true];
+	{rank = same; n1; 6; n4; n5; n6; n7; 22; 27};
+
+	6, 8, 17, 22, 27
+	[fillcolor=red];
+
+	n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11
+	[label="NIL", shape=record, width=.4,height=.25, fontsize=16];
+
+	13 -> 8, 17;
+	8 -> 1 [weight=6];
+	8 -> 11 [weight=5];
+	17 -> 15 [weight=4];
+	17 -> 25 [weight=5];
+	1 -> n1 [weight=7];
+	1 -> 6;
+	11 -> n4 [weight=10];
+	11 -> n5 [weight=14];
+	6 -> n2, n3;
+	15 -> n6 [weight=14];
+	15 -> n7 [weight=10];
+	25 -> 22;
+	25 -> 27 [weight=6];
+	22 -> n8 [weight=5];
+	22 -> n9 [weight=3];
+	27 -> n10 [weight=3];
+	27 -> n11 [weight=5];
+}

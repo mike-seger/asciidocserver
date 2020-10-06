@@ -1,0 +1,15 @@
+digraph G {
+    node [shape = "circle", width = "0.3",
+        style = "setlinewidth (2), filled" color = "black",
+        fillcolor = "pink", label = ""];
+    edge [fontname = "Helvetica-Bold", fontsize = "16", style = "bold"];
+    graph [rankdir = "LR", ranksep = "0.4"];
+    {rank = same; B; D;}
+
+    A-> B [label = "3", color = "red"];
+    B-> C [label = "2"];
+    B-> E [label = "1", color = "red"];
+    E-> C [label = "3", color = "red"];
+    A-> D [label = "2"];
+    D-> C [label = "3"];
+}

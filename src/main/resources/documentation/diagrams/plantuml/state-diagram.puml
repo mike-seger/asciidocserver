@@ -1,0 +1,12 @@
+skinparam state {
+  BackgroundColor    lightblue
+  BorderColor        lightblue
+  Arrowcolor         gray
+}
+Title Simple App
+state d as "Docker"
+state app as "Application" : Source: main.go\nDocker container\n  Image: hobbit\n  Name: frodo
+state db as "MySQL DB" : Docker container\n  Image: mysql\n  Name: shire
+d --> app : build and \ndeploy using \ncreate_app.sh
+d --> db : deploy using \nprovision_db.sh
+app -r-> db : read and write \npersistent data

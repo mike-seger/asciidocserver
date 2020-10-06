@@ -1,0 +1,78 @@
+hide footbox
+skinparam shadowing false
+skinparam style strictuml
+!MYFONT     = "Arial"
+!MYCOLOR    = "#222"
+!MYLINES    = "1.2"
+!MYSTYLE    = "normal"
+!$GROUP_A1  = "#d5dfec"
+!$GROUP_A2  = "#f3dcda"
+!$GROUP_A3  = "#ebf1de"
+!$GROUP_A4  = "#fdebdc"
+!HIDDEN     = "hidden"
+!unquoted function PART($x)       return "<u>" + $x + "</u>"
+!unquoted function ARROWLABEL($a) return "<color:"+MYCOLOR+"><back:white>"+$a
+!unquoted function GRP($a, $b)    return "group" + $a + " "+ $a + " " + $b
+skinparam sequence {
+  TitleFontSize               22
+  TitleFontStyle              MYSTYLE
+  TitleFontColor              MYCOLOR
+  TitleFontName               MYFONT
+  LifelineBorderColor         MYCOLOR
+  ActorBorderColor            MYCOLOR
+  ActorBackgroundColor        white
+  ActorBorderThickness        MYLINES
+  ActorFontColor              MYCOLOR
+  ParticipantFontColor        MYCOLOR
+  ParticipantFontStyle        MYSTYLE
+  ParticipantFontName         MYFONT
+  ParticipantBorderColor      MYCOLOR
+  ParticipantBackgroundColor  white
+  ParticipantBorderThickness  MYLINES
+  ArrowFontColor              MYCOLOR
+  ArrowFontStyle              MYSTYLE
+  ArrowFontName               MYFONT
+  ArrowColor                  MYCOLOR
+  ArrowThickness              MYLINES
+  GroupBorderColor            MYCOLOR
+  GroupBorderthickness        MYLINES
+  GroupHeaderFontStyle        MYSTYLE
+  GroupHeaderFontColor        MYCOLOR
+  GroupHeaderFontName         MYFONT
+  MessageAlign                center
+}
+
+title Authorization Flow
+
+actor u as "PART(User)"
+participant c as "PART(Client)\n"
+participant a as "PART(Auth)\nPART(Server)"
+participant s as "PART(Resource)\nPART(Server)"
+
+GRP($GROUP_A1, Init)
+u -> c  : ARROWLABEL(Request)
+end
+
+GRP($GROUP_A2, Authentication)
+c -> a  : ARROWLABEL(Redirect to Auth)
+u <-- a : ARROWLABEL(Request for login / approval)
+u -> a  : ARROWLABEL(User authenticates / approves)
+end
+
+GRP($GROUP_A3, Authorization)
+u -[HIDDEN]-> c
+c <-- a : ARROWLABEL(Authorization code)
+c -> a  : ARROWLABEL(Authorization code + Client ID + Client Secret)
+a -> a  : ARROWLABEL(Validate)
+c <-- a : ARROWLABEL(ID Token + Access Token)
+end
+
+GRP($GROUP_A4, Access)
+u -[HIDDEN]-> c
+c -> s  : ARROWLABEL(GET /v2/Resource + Access Token)
+c <-- s : ARROWLABEL(Resource)
+end
+
+GRP($GROUP_A1, Done)
+u <-- c : ARROWLABEL(Results)
+end
