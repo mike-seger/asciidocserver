@@ -5,6 +5,11 @@ asciidocserver:
 #  source-url: classpath:/documentation
   source-url: file:${user.dir}/src/main/resources/documentation
   destination-id: 1
+  installed-fonts:
+    - /documentation/assets/fonts/Dylan.ttf
+    - /documentation/assets/fonts/DroidSansMono.ttf
+    - /documentation/assets/fonts/fg-virgil.ttf
+    - /documentation/assets/fonts/Macs-Handwriting.ttf
 
 spring:
   application:

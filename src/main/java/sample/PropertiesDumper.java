@@ -161,8 +161,7 @@ public class PropertiesDumper {
                 jsonGenerator.setCodec(om);
                 jsonGenerator.writeObject(o);
                 baos.write(AnsiSyntaxHighlight.RESET.getBytes());
-                String result = baos.toString();
-                return result;
+                return baos.toString();
             } catch(Exception e) {
                 return om.writerWithDefaultPrettyPrinter().writeValueAsString(o);
             }
@@ -172,7 +171,7 @@ public class PropertiesDumper {
         }
     }
 
-    private final class AnsiSyntaxHighlightIntense {
+    private static final class AnsiSyntaxHighlightIntense {
         public static final String BLACK	= "90";
         public static final String RED	    = "91";
         public static final String GREEN	= "92";

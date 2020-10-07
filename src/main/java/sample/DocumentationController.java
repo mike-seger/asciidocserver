@@ -21,6 +21,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
@@ -29,26 +30,20 @@ import java.util.concurrent.CompletableFuture;
 public class DocumentationController {
     private final File htmlDir;
 
-    public DocumentationController(
-            @Value("${asciidocserver.source-url}") URL sourceUrl,
-            @Value("${asciidocserver.destination-id}") String destinationId
+    public DocumentationController(final AsciidocServerConfig asciidocServerConfig
             ) throws IOException, URISyntaxException {
         long time = System.currentTimeMillis();
-
-        //URL fontUrl=new URL(sourceUrl.toString()+"/assets/fg-virgil.ttf");
-        //URL fontUrl=getClass().getResource("/documentation/assets/fg-virgil.ttf");
-        //URL fontUrl=getClass().getResource("/documentation/assets/Another Birdhouse Light.ttf");
-        URL fontUrl=getClass().getResource("/documentation/assets/Dylan.ttf");
-
-        FontInstaller.installFont(fontUrl);
-        htmlDir = new TempFileUtils().createTempDirWithId(destinationId);
-        boolean changed = ResourcesUtils.copyResourceLocation(sourceUrl, htmlDir.toPath());
-        log.info("Finished Resource Sync ({}). Took {} ms", sourceUrl, System.currentTimeMillis() - time);
+        FontInstaller.installFonts(asciidocServerConfig.getInstalledFonts());
+        log.info("Finished installFonts. Took {} ms", System.currentTimeMillis() - time);
+        time = System.currentTimeMillis();
+        htmlDir = new TempFileUtils().createTempDirWithId(asciidocServerConfig.getDestinationId());
+        boolean changed = ResourcesUtils.copyResourceLocation(asciidocServerConfig.getSourceUrl(), htmlDir.toPath());
+        log.info("Finished Resource Sync ({}). Took {} ms", asciidocServerConfig.getSourceUrl(), System.currentTimeMillis() - time);
         if (changed) {
             processAsciiDoctor(htmlDir, null);
         }
 
-        CompletableFuture.runAsync(() -> watchSource(sourceUrl));
+        CompletableFuture.runAsync(() -> watchSource(asciidocServerConfig.getSourceUrl()));
     }
 
     private void watchSource(URL sourceUrl) {
@@ -97,24 +92,24 @@ public class DocumentationController {
             File imageDir=createDir(new File(htmlDir, imageDirName));
 
             Attributes attributes = AttributesBuilder.attributes()
-                    .attribute("imagesoutdir", imageDir.getAbsolutePath())
-                    .attribute("docinfo", "shared")
-                    .icons("font")
-                    .copyCss(true)
-                    .tableOfContents2(Placement.LEFT)
-                    .sectionNumbers(true)
-                    .setAnchors(true)
-                    .noFooter(true)
-                    .imagesDir(imageDirName)
-                    .get();
+                .attribute("imagesoutdir", imageDir.getAbsolutePath())
+                .attribute("docinfo", "shared")
+                .icons("font")
+                .copyCss(true)
+                .tableOfContents2(Placement.LEFT)
+                .sectionNumbers(true)
+                .setAnchors(true)
+                .noFooter(true)
+                .imagesDir(imageDirName)
+                .get();
 
             OptionsBuilder optionsBuilder = OptionsBuilder.options()
-                    .safe(SafeMode.UNSAFE)
-                    .backend("html5")
-                    .headerFooter(true)
-                    .baseDir(htmlDir)
-                    .mkDirs(true)
-                    .attributes(attributes);
+                .safe(SafeMode.UNSAFE)
+                .backend("html5")
+                .headerFooter(true)
+                .baseDir(htmlDir)
+                .mkDirs(true)
+                .attributes(attributes);
 
             if(singleDoc!=null) {
                 convertAsciiDoc(asciidoctor, singleDoc, optionsBuilder);
