@@ -29,4 +29,4 @@ rgbfudge(x) = x*51*32768 + (11-x)*51*128 + int(abs(5.5-x)*510/9.)
 ti(col) = sprintf("%d",col)
 NO_ANIMATION = 1
 ## Last datafile plotted: "candlesticks.dat"
-splot for [col=1:5] '{docdir}/assets/data/candlesticks.dat' using 1:(col):(col*column(col)):(rgbfudge($1))       with boxes fc rgb variable
+splot for [col=1:5] '{docdir}/assets/data/candlesticks.dat' using 1:(col):(col*column(col)):(rgbfudge($1)) with boxes fc rgb variable'
