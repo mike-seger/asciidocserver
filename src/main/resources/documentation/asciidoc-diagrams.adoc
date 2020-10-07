@@ -8,7 +8,7 @@
 === Sequence Diagrams
 ==== Styled
 ===== Colors
-plantuml::diagrams/plantuml/sequence-colors-styles.puml["diagram-10", format="svg", height="80%", width="80%", opts="inline"]
+plantuml::diagrams/plantuml/sequence-colors-styles.puml["diagram-10", format="png", height="80%", width="80%", opts="inline"]
 
 ===== Colors and Font
 plantuml::diagrams/plantuml/sequence-colors-font.puml["diagram-20", format="svg", height="80%", width="80%", opts="inline"]
@@ -149,10 +149,10 @@ gnuplot::diagrams/gnuplot/pm3d-lighting-model.gnu["diagram-106", format=svg, opt
 gnuplot::diagrams/gnuplot/viridis-colormap.gnu["diagram-107", format=svg, opts="inline", subs="+attributes"]
 
 
-//== General
-//
-//=== List Fonts
-//[plantuml, "diagram-340", format="svg", height="80%", width="80%", opts="inline"]
-//----
-//listfonts
-//----
+== General
+
+=== List Fonts
+[plantuml, "diagram-340", format="svg", height="80%", width="80%", opts="inline"]
+----
+listfonts
+----
