@@ -1,32 +1,56 @@
-#!/usr/bin/gnuplot
-#
-# set terminal pngcairo  transparent enhanced font "arial,10" fontscale 1.0 size 600, 400
-# set output 'boxes3d.6.png'
-set boxwidth 0.4 absolute
-set boxdepth 0.3
-set style fill   solid 1.00 border
-set grid nopolar
-set grid xtics nomxtics ytics nomytics ztics nomztics nortics nomrtics \
- nox2tics nomx2tics noy2tics nomy2tics nocbtics nomcbtics
-set grid vertical layerdefault   lt 0 linecolor 0 linewidth 1.000,  lt 0 linecolor 0 linewidth 1.000
+reset
+set view 60, 20
+set parametric
+set isosample 2, 2
 unset key
-set wall z0  fc  rgb "slategrey"  fillstyle  transparent solid 0.50 border lt -1
-set view 59, 24, 1, 1
-set style data lines
-set xyplane at 0
-set title "Full treatment: 3D boxes with pm3d depth sorting and lighting"
-set xrange [ * : * ] noreverse writeback
-set x2range [ * : * ] noreverse writeback
-set yrange [ 0.00000 : 6.00000 ] noreverse nowriteback
-set y2range [ * : * ] noreverse writeback
-set zrange [ * : * ] noreverse writeback
-set cbrange [ * : * ] noreverse writeback
-set rrange [ * : * ] noreverse writeback
-set pm3d depthorder base
-set pm3d interpolate 1,1 flush begin noftriangles border linewidth 1.000 dashtype solid corners2color mean
-set pm3d lighting primary 0.5 specular 0.2 spec2 0
-rgbfudge(x) = x*51*32768 + (11-x)*51*128 + int(abs(5.5-x)*510/9.)
-ti(col) = sprintf("%d",col)
-NO_ANIMATION = 1
-## Last datafile plotted: "candlesticks.dat"
-splot for [col=1:5] '{docdir}/assets/data/candlesticks.dat' using 1:(col):(col*column(col)):(rgbfudge($1)) with boxes fc rgb variable'
+unset colorbox
+set ticslevel 0
+set urange [0:0.5]
+set vrange [0:1]
+set xrange [0:7]
+set yrange [-3.500000:3.500000]
+set zrange [0:0.300000]
+set multiplot
+set border 1+2+4+8+16+32+64+256+512
+unset ytics
+unset xtics
+set palette model RGB functions 0.9, 0.9,0.95
+splot 14*u, -3.500000+7*v, 0 w pm3d
+unset border
+unset xtics
+unset ytics
+unset ztics
+set palette model RGB functions 1, 254.0/255.0, 189.0/255.0
+splot 0, -3.500000+7*v, 0.600000*u w pm3d, 14*u, 3.500000, 0.300000*v w pm3d
+set palette defined (0 1 0.5 0.5, 1 1 0.5 0.5)
+splot 0+u, v, 0.100000 w pm3d,\
+1+u, v, 0.200000 w pm3d,\
+2+u, v, 0.200000 w pm3d,\
+3+u, v, 0.050000 w pm3d,\
+4+u, v, 0.150000 w pm3d,\
+5+u, v, 0.300000 w pm3d,\
+6+u, v, 0.100000 w pm3d
+set palette defined (0 1 0.3 0.3, 1 1 0.3 0.3)
+splot 0+0.5, 2*u, v*0.100000 w pm3d,\
+1+0.5, 2*u, v*0.200000 w pm3d,\
+2+0.5, 2*u, v*0.200000 w pm3d,\
+3+0.5, 2*u, v*0.050000 w pm3d,\
+4+0.5, 2*u, v*0.150000 w pm3d,\
+5+0.5, 2*u, v*0.300000 w pm3d,\
+6+0.5, 2*u, v*0.100000 w pm3d
+set palette defined (0 0.8 0 0, 1 0.8 0 0)
+set label 1 "1989" at 0.300000, -2.500000 rotate by 40
+set label 2 "1990" at 1.300000, -2.500000 rotate by 40
+set label 3 "1991" at 2.300000, -2.500000 rotate by 40
+set label 4 "1992" at 3.300000, -2.500000 rotate by 40
+set label 5 "1993" at 4.300000, -2.500000 rotate by 40
+set label 6 "1994" at 5.300000, -2.500000 rotate by 40
+set label 7 "1995" at 6.300000, -2.500000 rotate by 40
+splot 0+u, 0, v*0.100000 w pm3d,\
+1+u, 0, v*0.200000 w pm3d,\
+2+u, 0, v*0.200000 w pm3d,\
+3+u, 0, v*0.050000 w pm3d,\
+4+u, 0, v*0.150000 w pm3d,\
+5+u, 0, v*0.300000 w pm3d,\
+6+u, 0, v*0.100000 w pm3d
+unset multiplot
