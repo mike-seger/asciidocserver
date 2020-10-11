@@ -10,6 +10,7 @@ import java.util.List;
 @ConfigurationProperties("asciidocserver")
 public class AsciidocServerConfig {
 	private URL sourceUrl;
+	private URL diagramTemplateUrl;
 	private String destinationId;
 	private List<String> installedFonts;
 
@@ -35,5 +36,13 @@ public class AsciidocServerConfig {
 
 	public void setInstalledFonts(List<String> installedFonts) {
 		this.installedFonts = installedFonts;
+	}
+
+	public URL getDiagramTemplateUrl() {
+		return diagramTemplateUrl;
+	}
+
+	public void setDiagramTemplateUrl(URL diagramTemplateUrl) {
+		this.diagramTemplateUrl = diagramTemplateUrl;
 	}
 }

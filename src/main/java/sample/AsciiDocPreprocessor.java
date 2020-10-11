@@ -1,11 +1,11 @@
 package sample;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
@@ -14,6 +14,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class AsciiDocPreprocessor {
+	private final String diagramTemplate;
+
+	public AsciiDocPreprocessor(AsciidocServerConfig config ) throws IOException, URISyntaxException {
+		diagramTemplate = Files.readString(new File(config.getDiagramTemplateUrl().toURI()).toPath()).trim();
+	}
 	/**
 	 * The purpose of this method is to optimize for speed as external
 	 * diagrams do not seem to be cached, so they are converted to inline
@@ -36,14 +41,22 @@ public class AsciiDocPreprocessor {
 	}
 
 	private String convertDiagramLine(File adocFile, String line) {
-		String diagramPattern = "^([A-Za-z0-9]+)::([A-Za-z0-9\\-_.]*/[A-Za-z0-9\\-_/.]+)\\[(.*)] *$";
+		String diagramPattern = "^([A-Za-z0-9]+)::([A-Za-z0-9\\-_.+'()]*/[A-Za-z0-9\\-_/.+'()]+)\\[(.*)] *$";
 		if(line.matches(diagramPattern)) {
-			File diagramFile = new File(adocFile.getParent(),
-				line.replaceAll(diagramPattern, "$2"));
-			String replacedLine = line.replaceAll(diagramPattern, "[$1, $3]");
+			String path=line.replaceAll(diagramPattern, "$2");
+			File diagramFile = new File(adocFile.getParent(), path);
+			String type = line.replaceAll(diagramPattern, "$1");
+			String attrs = line.replaceAll(diagramPattern, "$3");
 			try {
 				String diagram = Files.readString(diagramFile.toPath()).trim();
-				line = replacedLine+"\n----\n"+diagram+"\n----\n\n";
+				line = diagramTemplate;
+				if("gnuplot".matches(type)) {
+					line = line.replaceAll(", *(height|width) *= *\"[0-9]+%\"", "");
+				}
+				line = line.replace("${type}", type);
+				line = line.replace("${diagram}", diagram);
+				line = line.replace("${attrs}", attrs);
+				line = line.replace("${path}", path);
 			} catch(IOException e) {
 				log.error("Error on line: {}. File {}", line, diagramFile.getAbsolutePath(), e);
 			}

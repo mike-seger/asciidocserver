@@ -4,6 +4,7 @@ server:
 asciidocserver:
 #  source-url: classpath:/documentation
   source-url: file:${user.dir}/src/main/resources/documentation
+  diagram-template-url: classpath:documentation/templates/diagram.tpl
   destination-id: 1
   installed-fonts:
     - /documentation/assets/fonts/Dylan.ttf

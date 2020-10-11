@@ -2,6 +2,7 @@
 
 skinparam monochrome reverse
 skinparam backgroundColor #ffffff
+skinparam activityArrowFontColor 0
 
 actor User
 participant "First Class" as A
