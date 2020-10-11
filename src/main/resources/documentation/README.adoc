@@ -10,16 +10,17 @@ The examples below demonstrate the functionality of this application:
 
 === AsciiDoc Quick Reference
 This is the official Quick reference composed of dozens of adoc snippets. All files are hosted locally. +
-link:quickref/asciidoc-syntax-quick-reference.adoc[AsciiDoc Quick Reference]
+link:./quickref/asciidoc-syntax-quick-reference.adoc[AsciiDoc Quick Reference]
 
 === AsciiDoc Diagrams
 This is a collection of diagrams with enhanced styling over the defaults.
 Diagrams are simple ASCII definitions and rendered directly using the AsciiDoc Diagrams library. +
-link:asciidoc-diagrams.adoc[AsciiDoc Diagrams]
+link:./asciidoc-diagrams.adoc[AsciiDoc Diagrams]
 
 === AsciiDoc Example
 This example showcases a few features of AsciiDoc. +
-link:example/asciidoc-example.adoc[Example]
+link:./example/asciidoc-example.adoc[AsciiDoc Example]
+
 
 == Links
 === Skins

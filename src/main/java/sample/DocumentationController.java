@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jmimemagic.*;
 import org.asciidoctor.*;
 import org.asciidoctor.jruby.AsciiDocDirectoryWalker;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +20,6 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
@@ -29,6 +27,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class DocumentationController {
     private final File htmlDir;
+    private final static AsciiDocPreprocessor docFilter = new AsciiDocPreprocessor();
 
     public DocumentationController(final AsciidocServerConfig asciidocServerConfig
             ) throws IOException, URISyntaxException {
@@ -127,7 +126,11 @@ public class DocumentationController {
             return;
         }
         File htmlFile=new File(asciiDoc.getParent(), asciiDoc.getName()+".html");
-        try (Reader r=new FileReader(asciiDoc)) {
+        if(asciiDoc.exists() && asciiDoc.lastModified()<htmlFile.lastModified()) {
+            return;
+        }
+        File filteredAsciiDoc=docFilter.filterDiagrams(asciiDoc, htmlFile.getParentFile());
+        try (Reader r=new FileReader(filteredAsciiDoc)) {
             optionsBuilder.baseDir(asciiDoc.getParentFile());
             try (Writer w=new FileWriter(htmlFile)) {
                 asciidoctor.convert(r, w, optionsBuilder);

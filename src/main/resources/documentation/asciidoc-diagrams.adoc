@@ -17,13 +17,13 @@ plantuml::diagrams/plantuml/sequence-colors-font.puml["diagram-20", format="svg"
 plantuml::diagrams/plantuml/sequence-colors-reverse.puml["diagram-30", format="svg", height="80%", width="80%", opts="inline"]
 
 ==== Handwritten
-plantuml::diagrams/plantuml/sequence-handwritten.puml[plantuml, "diagram-40", format="svg", height="80%", width="80%", opts="inline"]
+plantuml::diagrams/plantuml/sequence-handwritten.puml["diagram-40", format="svg", height="80%", width="80%", opts="inline"]
 
 ==== Authentication Example
 plantuml::diagrams/plantuml/sequence-facebook-auth.puml["diagram-49", format="svg", height="80%", width="80%", opts="inline"]
 
 ==== Participant and Arrow Types
-plantuml::diagrams/plantuml/sequence-participant+arrow-types.puml[plantuml, "diagram-50", format="svg", height="80%", width="80%", opts="inline"]
+plantuml::diagrams/plantuml/sequence-participant+arrow-types.puml["diagram-50", format="svg", height="80%", width="80%", opts="inline"]
 
 === Class Diagram
 Link:https://plantuml.com/class-diagram.puml[class-diagram]
