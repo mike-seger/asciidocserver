@@ -4,6 +4,19 @@
 :icons: font
 :blockdiag-fontpath: {docdir}/assets/fonts/fg-virgil.ttf
 
+== Shaape
+shaape::diagrams/shaape/example_5.shaape[]
+
+== Chart
+[chart,pie,file="secim-2014-pie.png",opt="title=2014 YEREL SEÇİM SONUÇLARI"]
+----
+AKP,  45.6, orange
+CHP,  27.8,red
+MHP,  15.2
+BDP,  4.2
+SP,  2
+----
+
 == Plant UML
 === Sequence Diagrams
 ==== Styled
@@ -17,7 +30,7 @@ plantuml::diagrams/plantuml/sequence-colors-font.puml["diagram-20", format="svg"
 plantuml::diagrams/plantuml/sequence-colors-reverse.puml["diagram-30", format="svg", height="80%", width="80%", opts="inline"]
 
 ==== Handwritten
-plantuml::diagrams/plantuml/sequence-handwritten.puml["diagram-40", format="svg", height="80%", width="80%", opts="inline"]
+plantuml::diagrams/plantuml/sequence-handwritten.puml["diagram-40", format="svg", fontpath="{docdir}/assets/fonts/fg-virgil.ttf", height="80%", width="80%", opts="inline"]
 
 ==== Authentication Example
 plantuml::diagrams/plantuml/sequence-facebook-auth.puml["diagram-49", format="svg", height="80%", width="80%", opts="inline"]
@@ -152,7 +165,8 @@ gnuplot::diagrams/gnuplot/viridis-colormap.gnu["diagram-107", format=svg, opts="
 == General
 
 === List Fonts
-[plantuml, "diagram-340", format="svg", height="80%", width="80%", opts="inline"]
+[plantuml, "fontlist", format="svg", height="80%", width="80%", opts="inline"]
 ----
 listfonts
 ----
+

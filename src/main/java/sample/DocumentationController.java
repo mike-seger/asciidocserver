@@ -27,10 +27,11 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class DocumentationController {
     private final File htmlDir;
-    private final static AsciiDocPreprocessor docFilter = new AsciiDocPreprocessor();
+    final private AsciiDocPreprocessor asciiDocPreprocessor;
 
-    public DocumentationController(final AsciidocServerConfig asciidocServerConfig
-            ) throws IOException, URISyntaxException {
+    public DocumentationController(final AsciidocServerConfig asciidocServerConfig,
+            AsciiDocPreprocessor asciiDocPreprocessor) throws IOException, URISyntaxException {
+        this.asciiDocPreprocessor=asciiDocPreprocessor;
         long time = System.currentTimeMillis();
         FontInstaller.installFonts(asciidocServerConfig.getInstalledFonts());
         log.info("Finished installFonts. Took {} ms", System.currentTimeMillis() - time);
@@ -82,7 +83,7 @@ public class DocumentationController {
         }
     }
 
-    private static synchronized void processAsciiDoctor(File htmlDir, File singleDoc) throws IOException {
+    private synchronized void processAsciiDoctor(File htmlDir, File singleDoc) throws IOException {
         long time = System.currentTimeMillis();
         log.info("Started asciidoctor");
         try (Asciidoctor asciidoctor = Asciidoctor.Factory.create()) {
@@ -120,7 +121,7 @@ public class DocumentationController {
         log.info("Finished asciidoctor. Took {} ms", System.currentTimeMillis()-time);
     }
 
-    private static void convertAsciiDoc(Asciidoctor asciidoctor, File asciiDoc, OptionsBuilder optionsBuilder) throws IOException {
+    private void convertAsciiDoc(Asciidoctor asciidoctor, File asciiDoc, OptionsBuilder optionsBuilder) throws IOException {
         if(!asciiDoc.isFile()) {
             log.warn("Not converting non-file: {}", asciiDoc);
             return;
@@ -129,7 +130,8 @@ public class DocumentationController {
         if(asciiDoc.exists() && asciiDoc.lastModified()<htmlFile.lastModified()) {
             return;
         }
-        File filteredAsciiDoc=docFilter.filterDiagrams(asciiDoc, htmlFile.getParentFile());
+        File filteredAsciiDoc=asciiDocPreprocessor.filterDiagrams(
+            asciiDoc, htmlFile.getParentFile());
         try (Reader r=new FileReader(filteredAsciiDoc)) {
             optionsBuilder.baseDir(asciiDoc.getParentFile());
             try (Writer w=new FileWriter(htmlFile)) {

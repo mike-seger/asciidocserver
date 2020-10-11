@@ -22,6 +22,7 @@ dependencies {
 
 	implementation "org.asciidoctor:asciidoctorj:2.4.1"
 	implementation "org.asciidoctor:asciidoctorj-diagram:2.0.5"
+	implementation 'com.bmuschko:asciidoctorj-tabbed-code-extension:0.3'
 
 	implementation "com.eclipsesource.j2v8:j2v8:6.2.0+"
 	implementation "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
