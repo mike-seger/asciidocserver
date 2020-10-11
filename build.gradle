@@ -22,13 +22,13 @@ dependencies {
 
 	implementation "org.asciidoctor:asciidoctorj:2.4.1"
 	implementation "org.asciidoctor:asciidoctorj-diagram:2.0.5"
-	implementation 'com.bmuschko:asciidoctorj-tabbed-code-extension:0.3'
+//	implementation 'com.bmuschko:asciidoctorj-tabbed-code-extension:0.3'
 
 	implementation "com.eclipsesource.j2v8:j2v8:6.2.0+"
 	implementation "com.eclipsesource.j2v8:j2v8_macosx_x86_64:4.6.0+"
 
-	implementation "guru.nidi:graphviz-java-all-j2v8:0.17.0"
-	implementation "org.graalvm.js:js:20.2.0"
+//	implementation "guru.nidi:graphviz-java-all-j2v8:0.17.0"
+//	implementation "org.graalvm.js:js:20.2.0"
 
 //	if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows()) {
 //		implementation "com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0+"
