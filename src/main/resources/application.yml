@@ -7,10 +7,15 @@ asciidocserver:
   diagram-template-url: classpath:documentation/templates/diagram.tpl
   destination-id: 1
   installed-fonts:
-    - /documentation/assets/fonts/Dylan.ttf
-    - /documentation/assets/fonts/DroidSansMono.ttf
-    - /documentation/assets/fonts/fg-virgil.ttf
-    - /documentation/assets/fonts/Macs-Handwriting.ttf
+    - /documentation/assets/fonts/AlanisHand.ttf
+    - /documentation/assets/fonts/Architex.ttf
+    - /documentation/assets/fonts/BrownBagLunch.ttf
+    - /documentation/assets/fonts/alphabetized-cassette-tapes.ttf
+    - /documentation/assets/fonts/mulders-handwriting.ttf
+#    - /documentation/assets/fonts/Dylan.ttf
+#    - /documentation/assets/fonts/DroidSansMono.ttf
+#    - /documentation/assets/fonts/fg-virgil.ttf
+#    - /documentation/assets/fonts/Macs-Handwriting.ttf
 
 spring:
   application:
