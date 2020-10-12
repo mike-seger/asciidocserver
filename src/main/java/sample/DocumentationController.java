@@ -2,15 +2,14 @@ package sample;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jmimemagic.*;
+import org.apache.tika.Tika;
 import org.asciidoctor.*;
 import org.asciidoctor.jruby.AsciiDocDirectoryWalker;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.InvalidMimeTypeException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,17 +28,20 @@ import java.util.concurrent.CompletableFuture;
 public class DocumentationController {
     private final File htmlDir;
     final private AsciiDocPreprocessor asciiDocPreprocessor;
+    final private Tika tika = new Tika();
 
     public DocumentationController(final AsciidocServerConfig asciidocServerConfig,
             AsciiDocPreprocessor asciiDocPreprocessor) throws IOException, URISyntaxException {
         this.asciiDocPreprocessor=asciiDocPreprocessor;
-        long time = System.currentTimeMillis();
-        Set<URL> fonts=FontInstaller.installFonts(asciidocServerConfig.getInstalledFonts());
-        log.info("Finished installFonts. Took {} ms", System.currentTimeMillis() - time);
-        time = System.currentTimeMillis();
         htmlDir = new TempFileUtils().createTempDirWithId(asciidocServerConfig.getDestinationId());
         boolean changed = ResourcesUtils.copyResourceLocation(asciidocServerConfig.getSourceUrl(), htmlDir.toPath());
-        log.info("Finished Resource Sync ({}). Took {} ms", asciidocServerConfig.getSourceUrl(), System.currentTimeMillis() - time);
+        log.info("Finished Resource Sync ({}).", asciidocServerConfig.getSourceUrl());
+        Set<FontInstaller.FontInfo> fontInfos=FontInstaller
+            .installFonts(asciidocServerConfig.getFontLocations());
+        FontInstaller.createFontCss(
+            new File(htmlDir.getAbsolutePath()+"/assets/css/fonts2.css"),
+            fontInfos,".*/documentation/assets/fonts/", "../fonts/");
+        log.info("Finished installFonts");
         if (changed) {
             processAsciiDoctor(htmlDir, null);
         }
@@ -162,10 +164,13 @@ public class DocumentationController {
         } else {
             File file = new File(htmlDir, path);
             resource = new FileSystemResource(file);
-            MagicMatch match = Magic.getMagicMatch(file, true);
-            headers.setContentType(MediaType.valueOf(match.getMimeType()));
+            try {
+                headers.setContentType(MediaType.valueOf(tika.detect(file)));
+            } catch (IOException | InvalidMimeTypeException | InvalidMediaTypeException e) {
+                log.debug("JDK MIME detection failed for {}. Reason: {}", file, e.getMessage());
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            }
         }
-
-        return new ResponseEntity<>(resource, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 }

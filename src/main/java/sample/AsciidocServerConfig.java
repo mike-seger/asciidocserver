@@ -12,7 +12,7 @@ public class AsciidocServerConfig {
 	private URL sourceUrl;
 	private URL diagramTemplateUrl;
 	private String destinationId;
-	private List<String> installedFonts;
+	private List<String> fontLocations;
 
 	public URL getSourceUrl() {
 		return sourceUrl;
@@ -30,12 +30,12 @@ public class AsciidocServerConfig {
 		this.destinationId = destinationId;
 	}
 
-	public List<String> getInstalledFonts() {
-		return installedFonts;
+	public List<String> getFontLocations() {
+		return fontLocations;
 	}
 
-	public void setInstalledFonts(List<String> installedFonts) {
-		this.installedFonts = installedFonts;
+	public void setFontLocations(List<String> fontLocations) {
+		this.fontLocations = fontLocations;
 	}
 
 	public URL getDiagramTemplateUrl() {
