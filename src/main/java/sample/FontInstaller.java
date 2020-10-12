@@ -75,7 +75,7 @@ public class FontInstaller {
 
 	private static String fontInfo2Css(FontInfo fontInfo, String prefixRegex, String replacement) {
 		return String.format(
-			"@font-face {\n\tfont-family: '%s'};\n\tsrc: url('%s');\n}\n",
+			"@font-face { font-family: '%s'; src: url('%s'); }\n",
 			fontInfo.name,
 			fontInfo.location.toExternalForm().replaceAll(prefixRegex, replacement));
 	}

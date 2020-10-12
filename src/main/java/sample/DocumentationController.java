@@ -39,7 +39,7 @@ public class DocumentationController {
         Set<FontInstaller.FontInfo> fontInfos=FontInstaller
             .installFonts(asciidocServerConfig.getFontLocations());
         FontInstaller.createFontCss(
-            new File(htmlDir.getAbsolutePath()+"/assets/css/fonts2.css"),
+            new File(htmlDir.getAbsolutePath()+"/assets/css/fonts.css"),
             fontInfos,".*/documentation/assets/fonts/", "../fonts/");
         log.info("Finished installFonts");
         if (changed) {

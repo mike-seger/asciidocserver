@@ -6,150 +6,150 @@
 :max-width: 800
 
 
-//== Plant UML
-//=== Sequence Diagrams
-//==== Styled
-//===== Colors
-//
-//plantuml::diagrams/plantuml/sequence-colors-styles.puml["diagram-10", format="svg", opts="inline"]
-//
-//===== Colors and Font
-//plantuml::diagrams/plantuml/sequence-colors-font.puml["diagram-20", format="svg", opts="inline"]
-//
-//==== Reverse Colors
-//plantuml::diagrams/plantuml/sequence-colors-reverse.puml["diagram-30", format="svg", opts="inline"]
-//
-//==== Handwritten
-//plantuml::diagrams/plantuml/sequence-handwritten.puml["diagram-40", format="svg", fontpath="{docdir}/assets/fonts/fg-virgil.ttf", opts="inline"]
-//
-//==== Authentication Example
-//plantuml::diagrams/plantuml/sequence-facebook-auth.puml["diagram-49", format="svg", opts="inline"]
-//
-//==== Participant and Arrow Types
-//plantuml::diagrams/plantuml/sequence-participant+arrow-types.puml["diagram-50", format="svg", opts="inline"]
-//
-//=== Class Diagram
-//Link:https://plantuml.com/class-diagram.puml[class-diagram]
-//
-//plantuml::diagrams/plantuml/class-diagram.puml["diagram-108", format="svg", opts="inline"]
-//
-//=== E/R Diagram
-//plantuml::diagrams/plantuml/e-r-diagram.puml["diagram-109", format="svg", opts="inline"]
-//
-//=== Mind Map
-//plantuml::diagrams/plantuml/mindmap.puml["diagram-140", format="svg", opts="inline"]
-//
-//=== Flow Diagram
-//==== Variant 1
-//plantuml::diagrams/plantuml/flow-diagram1.puml["diagram-130", format="svg", opts="inline"]
-//
-//==== Variant 2
-//plantuml::diagrams/plantuml/flow-diagram2.puml["diagram-150", format="svg", opts="inline"]
-//
-//=== Math
-//==== Core
-//plantuml::diagrams/plantuml/math-core.puml["diagram-160", format="svg", opts="inline"]
-//
-//==== ASCII
-//plantuml::diagrams/plantuml/math-ascii.puml["diagram-170", format="svg", opts="inline"]
-//
-//==== LaTEX
-//plantuml::diagrams/plantuml/math-latex.puml["diagram-180", format="svg", opts="inline"]
-//
-//=== Gant Chart
-//==== Without Date
-//plantuml::diagrams/plantuml/gannt-chart-no-date.puml["diagram-190", format="svg", opts="inline"]
-//
-//==== With Date
-//plantuml::diagrams/plantuml/gannt-chart+date.puml["diagram-200", format="svg", opts="inline"]
-//
-//=== Flow
-//==== Workflow
-//plantuml::diagrams/plantuml/workflow1.puml["diagram-210", format="svg", opts="inline"]
-//
-//==== Workflow 2
-//plantuml::diagrams/plantuml/workflow2.puml["diagram-220", format="svg", opts="inline"]
-//
-//==== State Diagram
-//plantuml::diagrams/plantuml/state-diagram.puml["diagram-230", format="svg", opts="inline"]
-//
-//==== Process Diagram Azure
-//plantuml::diagrams/plantuml/process-azure.puml["diagram-240", format="svg", opts="inline"]
-//
-//==== Process Cloud Insight
-//plantuml::diagrams/plantuml/process-cloud-insight.puml["diagram-250", format="svg", opts="inline"]
-//
-//plantuml::diagrams/plantuml/process-actionfps.puml["diagram-270", format="svg", opts="inline"]
-//
-//=== Salt Wireframe UI
-//Link: https://plantuml.com/salt
-//
-//==== UI
-//plantuml::diagrams/plantuml/salt-wireframe-ui.puml["diagram-290", format="svg", opts="inline"]
-//
-//==== Tree
-//plantuml::diagrams/plantuml/tree.puml["diagram-300", format="svg", opts="inline"]
-//
-//==== Tree Table
-//plantuml::diagrams/plantuml/tree-table.puml["diagram-310", format="svg", opts="inline"]
-//
-//=== Archimate
-//Link: https://plantuml.com/archimate-diagram +
-//
-//plantuml::diagrams/plantuml/archimate.puml["diagram-330", format="svg", opts="inline"]
-//
-//== DITAA Diagram
-//ditaa::diagrams/ditaa/diagram.ditaa["diagram-70", format="svg", opts="inline"]]
-//
-//== GraphViz
-//=== State Transition
-//graphviz::diagrams/graphviz/state-transition.dot["diagram-90", format="svg", opts="inline"]
-//
-//=== Neural Networks
-//==== 1
-//graphviz::diagrams/graphviz/neural-network1.dot["diagram-91", format="svg", opts="inline"]
-//
-//==== 2
-//graphviz::diagrams/graphviz/neural-network2.dot["diagram-94", format="svg", opts="inline"]
-//
-//=== Critical Path
-//graphviz::diagrams/graphviz/critical-path.dot["diagram-95", format="svg", opts="inline"]
-//
-//=== Red Black Tree
-//graphviz::diagrams/graphviz/red-black-tree.dot["diagram-96", format="svg", opts="inline"]
-//
-//== GNU Plot
-//=== Functions
-//gnuplot::diagrams/gnuplot/functions.gnu["diagram-97", format=svg, opts="inline", subs="+attributes"]
-//
-//=== 3D Bars
-//gnuplot::diagrams/gnuplot/3d-bars.gnu["diagram-98", format=svg, opts="inline", subs="+attributes"]
-//
-//=== Fence Plot
-//gnuplot::diagrams/gnuplot/fence-plot.gnu["diagram-99", format=svg, opts="inline", subs="+attributes"]
-//
-//=== Voxel
-//==== Plot
-//gnuplot::diagrams/gnuplot/voxel-plot.gnu["diagram-100", format=svg, opts="inline", subs="+attributes"]
-//
-//==== Grid
-//gnuplot::diagrams/gnuplot/voxel-grid.gnu["diagram-101", format=svg, opts="inline", subs="+attributes"]
-//
-//=== 4D data (3D Heat Map)
-//gnuplot::diagrams/gnuplot/4d-data.gnu["diagram-103", format=svg, opts="inline", subs="+attributes"]
-//
-//=== PM3D
-//==== Surfaces
-//gnuplot::diagrams/gnuplot/pm3d-surfaces.gnu["diagram-104", format=svg, opts="inline", subs="+attributes"]
-//
-//==== Color Surface
-//gnuplot::diagrams/gnuplot/pm3d-2-color-surface.gnu["diagram-105", format=svg, opts="inline", subs="+attributes"]
+== Plant UML
+=== Sequence Diagrams
+==== Styled
+===== Colors
 
-//==== Lighting Model
-//gnuplot::diagrams/gnuplot/pm3d-lighting-model.gnu["diagram-106", format=svg, opts="inline", subs="+attributes"]
-//
-//=== Viridis Colormap
-//gnuplot::diagrams/gnuplot/viridis-colormap.gnu["diagram-107", format=svg, opts="inline", subs="+attributes"]
+plantuml::diagrams/plantuml/sequence-colors-styles.puml["diagram-10", format="svg", opts="inline"]
+
+===== Colors and Font
+plantuml::diagrams/plantuml/sequence-colors-font.puml["diagram-20", format="svg", opts="inline"]
+
+==== Reverse Colors
+plantuml::diagrams/plantuml/sequence-colors-reverse.puml["diagram-30", format="svg", opts="inline"]
+
+==== Handwritten
+plantuml::diagrams/plantuml/sequence-handwritten.puml["diagram-40", format="svg", fontpath="{docdir}/assets/fonts/fg-virgil.ttf", opts="inline"]
+
+==== Authentication Example
+plantuml::diagrams/plantuml/sequence-facebook-auth.puml["diagram-49", format="svg", opts="inline"]
+
+==== Participant and Arrow Types
+plantuml::diagrams/plantuml/sequence-participant+arrow-types.puml["diagram-50", format="svg", opts="inline"]
+
+=== Class Diagram
+Link:https://plantuml.com/class-diagram.puml[class-diagram]
+
+plantuml::diagrams/plantuml/class-diagram.puml["diagram-108", format="svg", opts="inline"]
+
+=== E/R Diagram
+plantuml::diagrams/plantuml/e-r-diagram.puml["diagram-109", format="svg", opts="inline"]
+
+=== Mind Map
+plantuml::diagrams/plantuml/mindmap.puml["diagram-140", format="svg", opts="inline"]
+
+=== Flow Diagram
+==== Variant 1
+plantuml::diagrams/plantuml/flow-diagram1.puml["diagram-130", format="svg", opts="inline"]
+
+==== Variant 2
+plantuml::diagrams/plantuml/flow-diagram2.puml["diagram-150", format="svg", opts="inline"]
+
+=== Math
+==== Core
+plantuml::diagrams/plantuml/math-core.puml["diagram-160", format="svg", opts="inline"]
+
+==== ASCII
+plantuml::diagrams/plantuml/math-ascii.puml["diagram-170", format="svg", opts="inline"]
+
+==== LaTEX
+plantuml::diagrams/plantuml/math-latex.puml["diagram-180", format="svg", opts="inline"]
+
+=== Gant Chart
+==== Without Date
+plantuml::diagrams/plantuml/gannt-chart-no-date.puml["diagram-190", format="svg", opts="inline"]
+
+==== With Date
+plantuml::diagrams/plantuml/gannt-chart+date.puml["diagram-200", format="svg", opts="inline"]
+
+=== Flow
+==== Workflow
+plantuml::diagrams/plantuml/workflow1.puml["diagram-210", format="svg", opts="inline"]
+
+==== Workflow 2
+plantuml::diagrams/plantuml/workflow2.puml["diagram-220", format="svg", opts="inline"]
+
+==== State Diagram
+plantuml::diagrams/plantuml/state-diagram.puml["diagram-230", format="svg", opts="inline"]
+
+==== Process Diagram Azure
+plantuml::diagrams/plantuml/process-azure.puml["diagram-240", format="svg", opts="inline"]
+
+==== Process Cloud Insight
+plantuml::diagrams/plantuml/process-cloud-insight.puml["diagram-250", format="svg", opts="inline"]
+
+plantuml::diagrams/plantuml/process-actionfps.puml["diagram-270", format="svg", opts="inline"]
+
+=== Salt Wireframe UI
+Link: https://plantuml.com/salt
+
+==== UI
+plantuml::diagrams/plantuml/salt-wireframe-ui.puml["diagram-290", format="svg", opts="inline"]
+
+==== Tree
+plantuml::diagrams/plantuml/tree.puml["diagram-300", format="svg", opts="inline"]
+
+==== Tree Table
+plantuml::diagrams/plantuml/tree-table.puml["diagram-310", format="svg", opts="inline"]
+
+=== Archimate
+Link: https://plantuml.com/archimate-diagram +
+
+plantuml::diagrams/plantuml/archimate.puml["diagram-330", format="svg", opts="inline"]
+
+== DITAA Diagram
+ditaa::diagrams/ditaa/diagram.ditaa["diagram-70", format="svg", opts="inline"]]
+
+== GraphViz
+=== State Transition
+graphviz::diagrams/graphviz/state-transition.dot["diagram-90", format="svg", opts="inline"]
+
+=== Neural Networks
+==== 1
+graphviz::diagrams/graphviz/neural-network1.dot["diagram-91", format="svg", opts="inline"]
+
+==== 2
+graphviz::diagrams/graphviz/neural-network2.dot["diagram-94", format="svg", opts="inline"]
+
+=== Critical Path
+graphviz::diagrams/graphviz/critical-path.dot["diagram-95", format="svg", opts="inline"]
+
+=== Red Black Tree
+graphviz::diagrams/graphviz/red-black-tree.dot["diagram-96", format="svg", opts="inline"]
+
+== GNU Plot
+=== Functions
+gnuplot::diagrams/gnuplot/functions.gnu["diagram-97", format=svg, opts="inline", subs="+attributes"]
+
+=== 3D Bars
+gnuplot::diagrams/gnuplot/3d-bars.gnu["diagram-98", format=svg, opts="inline", subs="+attributes"]
+
+=== Fence Plot
+gnuplot::diagrams/gnuplot/fence-plot.gnu["diagram-99", format=svg, opts="inline", subs="+attributes"]
+
+=== Voxel
+==== Plot
+gnuplot::diagrams/gnuplot/voxel-plot.gnu["diagram-100", format=svg, opts="inline", subs="+attributes"]
+
+==== Grid
+gnuplot::diagrams/gnuplot/voxel-grid.gnu["diagram-101", format=svg, opts="inline", subs="+attributes"]
+
+=== 4D data (3D Heat Map)
+gnuplot::diagrams/gnuplot/4d-data.gnu["diagram-103", format=svg, opts="inline", subs="+attributes"]
+
+=== PM3D
+==== Surfaces
+gnuplot::diagrams/gnuplot/pm3d-surfaces.gnu["diagram-104", format=svg, opts="inline", subs="+attributes"]
+
+==== Color Surface
+gnuplot::diagrams/gnuplot/pm3d-2-color-surface.gnu["diagram-105", format=svg, opts="inline", subs="+attributes"]
+
+==== Lighting Model
+gnuplot::diagrams/gnuplot/pm3d-lighting-model.gnu["diagram-106", format=svg, opts="inline", subs="+attributes"]
+
+=== Viridis Colormap
+gnuplot::diagrams/gnuplot/viridis-colormap.gnu["diagram-107", format=svg, opts="inline", subs="+attributes"]
 
 
 == General
