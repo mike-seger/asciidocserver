@@ -5,6 +5,7 @@
 :blockdiag-fontpath: {docdir}/assets/fonts/fg-virgil.ttf
 :max-width: 800
 
+
 == Plant UML
 === Sequence Diagrams
 ==== Styled

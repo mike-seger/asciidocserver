@@ -20,6 +20,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Controller
@@ -33,7 +34,7 @@ public class DocumentationController {
             AsciiDocPreprocessor asciiDocPreprocessor) throws IOException, URISyntaxException {
         this.asciiDocPreprocessor=asciiDocPreprocessor;
         long time = System.currentTimeMillis();
-        FontInstaller.installFonts(asciidocServerConfig.getInstalledFonts());
+        Set<URL> fonts=FontInstaller.installFonts(asciidocServerConfig.getInstalledFonts());
         log.info("Finished installFonts. Took {} ms", System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
         htmlDir = new TempFileUtils().createTempDirWithId(asciidocServerConfig.getDestinationId());
