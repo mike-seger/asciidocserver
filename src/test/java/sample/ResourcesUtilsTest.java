@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -27,6 +28,10 @@ public class ResourcesUtilsTest {
 
     @Test
     public void testInstallFonts() {
-        FontInstaller.installFonts("documentation/assets/fonts");
+        int n=FontInstaller.installFonts("documentation/assets/fonts").size();
+        assertTrue(n>0);
+        assertEquals(n, FontInstaller.installFonts("/documentation/assets/fonts").size());
+        assertEquals(n, FontInstaller.installFonts("documentation/assets/fonts/").size());
+        assertEquals(n, FontInstaller.installFonts("/documentation/assets/fonts/").size());
     }
 }

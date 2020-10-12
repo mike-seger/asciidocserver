@@ -7,28 +7,33 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Collections.emptySet;
 
 @Slf4j
 public class FontInstaller {
-	public static void installFonts(final List<String> fonts) {
-		fonts.forEach(font -> {
-			URL fontUrl = FontInstaller.class.getResource(font);
-			if(fontUrl == null) {
-				log.error("Cannot find font: {}", font);
-			}
-			installFont(fontUrl);
-		});
+	public static Set<URL> installFonts(Collection<String> locations) {
+		Set<URL> fonts=new HashSet<>();
+		locations.forEach(l -> fonts.addAll(installFonts(l)));
+		return fonts;
 	}
 
-	public static void installFonts(final String location) {
+	public static Set<URL> installFonts(String location) {
 		try {
-			ResourcesUtils.getResources(location+"/*.ttf")
-				.stream().map(FontInstaller::getResourceUrl).filter(Objects::nonNull)
-				.forEach(FontInstaller::installFont);
+			location = location
+				.replaceAll("^/*", "")
+				.replaceAll("/$","")
+				.replaceAll("$", "/*.ttf");
+			return ResourcesUtils.getResources(location)
+				.stream().map(FontInstaller::getResourceUrl)
+				.filter(Objects::nonNull)
+				.map(FontInstaller::installFont)
+				.collect(Collectors.toSet());
 		} catch (IOException e) {
 			log.error("Unable to install fonts from: {}", location, e);
+			return emptySet();
 		}
 	}
 
@@ -41,16 +46,18 @@ public class FontInstaller {
 		return null;
 	}
 
-	public static void installFont(final URL sourceUrl) {
+	public static URL installFont(final URL sourceUrl) {
 		try {
 			try(InputStream is = sourceUrl.openStream()) {
 				Font customFont = Font.createFont(Font.TRUETYPE_FONT, is);//.deriveFont(12f);
 				log.info("Font: {} ({})", customFont.getFontName(), customFont.getSize());
 				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 				ge.registerFont(customFont);
+				return sourceUrl;
 			}
 		} catch (Exception e) {
 			log.error("Unable to install font: {}", sourceUrl, e);
+			return null;
 		}
 	}
 }
