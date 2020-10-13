@@ -5,7 +5,7 @@ ${diagram}
 .Source
 [%collapsible]
 ========
-[source,shell]
+[source]
 ....
 ${diagram}
 ....

@@ -57,7 +57,7 @@ public class FontInstaller {
 		try {
 			try(InputStream is = sourceUrl.openStream()) {
 				Font customFont = Font.createFont(Font.TRUETYPE_FONT, is);//.deriveFont(12f);
-				log.info("Font: {} ({})", customFont.getFontName(), customFont.getSize());
+				log.info("Font: {}", customFont.getFontName());
 				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 				ge.registerFont(customFont);
 				return new FontInfo(sourceUrl, customFont.getFontName());
@@ -69,19 +69,15 @@ public class FontInstaller {
 	}
 
 	public static void createFontCss(File cssFile, Set<FontInfo> fontInfos, String prefixRegex, String replacement) throws IOException {
-		String css = fontInfos.stream().map(fi -> fontInfo2Css(fi, prefixRegex, replacement)).collect(Collectors.joining());
+		String css = fontInfos.stream().map(fi -> fontInfo2Css(fi, prefixRegex, replacement)).collect(Collectors.joining("\n"));
 		Files.write(cssFile.toPath(), css.getBytes());
 	}
 
 	private static String fontInfo2Css(FontInfo fontInfo, String prefixRegex, String replacement) {
 		return String.format(
-			"@font-face { font-family: '%s'; src: url('%s'); }\n",
+			"@font-face { font-family: '%s'; src: url('%s'); }",
 			fontInfo.name,
 			fontInfo.location.toExternalForm().replaceAll(prefixRegex, replacement));
-	}
-
-	private static String getRelativeUri(URI baseDir, URI path) {
-		return baseDir.relativize(path).getPath();
 	}
 
 	@Data

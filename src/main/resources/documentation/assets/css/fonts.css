@@ -1,3 +1,7 @@
+/*
+    This will be replaced at runtime by a generated version
+    based on the actually available fonts in ../fonts
+*/
 @font-face {
     font-family: 'FG Virgil';
     src: url('../fonts/fg-virgil.ttf');

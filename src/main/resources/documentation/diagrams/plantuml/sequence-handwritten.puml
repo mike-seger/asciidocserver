@@ -3,7 +3,7 @@
 skinparam handwritten true
 skinparam monochrome true
 skinparam packageStyle rect
-skinparam defaultFontName "FG Virgil"
+skinparam defaultFontName "FG Virgil", 'Comic Sans MS'
 ' skinparam defaultFontName Dylan
 ' skinparam defaultFontName "Bradley Hand"
 ' skinparam defaultFontName Macshandwriting, "Bradley Hand", "FG Virgil", Dylan
