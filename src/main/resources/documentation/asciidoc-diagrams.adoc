@@ -5,8 +5,33 @@
 :blockdiag-fontpath: {docdir}/assets/fonts/fg-virgil.ttf
 :max-width: 800
 
-
 == Plant UML
+=== Basic Diagrams
+
+==== Links
+
+===== Together
+plantuml::diagrams/plantuml/links.puml["diagram-001", format="svg", opts="inline"]
+
+===== More
+plantuml::diagrams/plantuml/links-more.puml["diagram-002", format="svg", opts="inline"]
+
+==== Conditions
+===== If
+plantuml::diagrams/plantuml/conditions-if.puml["diagram-003", format="svg", opts="inline"]
+
+===== Case
+plantuml::diagrams/plantuml/conditions-case.puml["diagram-004", format="svg", opts="inline"]
+
+==== Arrows
+
+===== Directions
+plantuml::diagrams/plantuml/arrows-directions.puml["diagram-011", format="svg", opts="inline"]
+
+===== Left Right
+plantuml::diagrams/plantuml/arrows-left-right.puml["diagram-012", format="svg", opts="inline"]
+
+
 === Sequence Diagrams
 ==== Styled
 ===== Colors
@@ -15,6 +40,9 @@ plantuml::diagrams/plantuml/sequence-colors-styles.puml["diagram-10", format="sv
 
 ===== Colors and Font
 plantuml::diagrams/plantuml/sequence-colors-font.puml["diagram-20", format="svg", opts="inline"]
+
+==== More Colors
+plantuml::diagrams/plantuml/activity-colors.puml["diagram-25", format="svg", opts="inline"]
 
 ==== Reverse Colors
 plantuml::diagrams/plantuml/sequence-colors-reverse.puml["diagram-30", format="svg", opts="inline"]
@@ -30,7 +58,6 @@ plantuml::diagrams/plantuml/sequence-participant+arrow-types.puml["diagram-50", 
 
 === Class Diagram
 Link:https://plantuml.com/class-diagram.puml[class-diagram]
-
 plantuml::diagrams/plantuml/class-diagram.puml["diagram-108", format="svg", opts="inline"]
 
 === E/R Diagram
@@ -42,6 +69,9 @@ plantuml::diagrams/plantuml/mindmap.puml["diagram-140", format="svg", opts="inli
 === Flow Diagram
 ==== Variant 1
 plantuml::diagrams/plantuml/flow-diagram1.puml["diagram-130", format="svg", opts="inline"]
+
+==== Variant 1b
+plantuml::diagrams/plantuml/flow-diagram1b.puml["diagram-141", format="svg", opts="inline"]
 
 ==== Variant 2
 plantuml::diagrams/plantuml/flow-diagram2.puml["diagram-150", format="svg", opts="inline"]

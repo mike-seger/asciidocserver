@@ -1,0 +1,29 @@
+@startuml updown
+
+left to right direction
+
+!pragma layout smetana
+
+left to right direction
+
+' https://crashedmind.github.io/PlantUMLHitchhikersGuide/layout/layout.html
+
+skinparam rectangleBackgroundColor #BDE3FF
+
+'top to bottom direction
+
+rectangle Arrows
+rectangle A
+rectangle B
+rectangle C
+rectangle D
+rectangle E
+rectangle F
+
+Arrows --> A 
+Arrows --> B
+Arrows --> C
+Arrows --> D
+Arrows --[hidden]> E
+
+@enduml

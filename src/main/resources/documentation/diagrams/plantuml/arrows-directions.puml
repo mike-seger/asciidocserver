@@ -1,0 +1,18 @@
+@startuml updown
+
+!pragma layout smetana
+
+!theme sandstone
+
+component Arrows
+component Up
+component Down
+component Left
+component Right
+
+Arrows -u-> Up 
+Arrows -d-> Down
+Arrows -l-> Left
+Arrows -r-> Right
+
+@enduml

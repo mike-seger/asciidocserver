@@ -1,51 +1,20 @@
-scale 1.2
-skinparam shadowing false
-skinparam defaultTextAlignment center
-!MYCOLOR       = "#2c95dd"
-!MYFONTCOLOR   = "white"
-!MYBORDERCOLOR = "black"
-skinparam activity {
-Fontcolor               MYFONTCOLOR
-BackgroundColor         MYCOLOR
-BorderColor             MYBORDERCOLOR
-ArrowColor              MYBORDERCOLOR
-ArrowFontColor          MYBORDERCOLOR
-ArrowFontSize           14
-DiamondFontColor        MYFONTCOLOR
-DiamondBackgroundColor  MYCOLOR
-DiamondBorderColor      MYBORDERCOLOR
-}
-skinparam swimlane {
-BorderThickness  0
-BorderColor      white
-TitleFontColor   hidden
-}
-!unquoted function DECIDE(a,b,c)
-if (a) then ( No )
-:b]
-else ( Yes )
-|2|
-:c]
-detach
+!pragma layout smetana
+
+title Point two queries to same activity\nwith `goto`
+start
+if (Test Question?) then (yes)
+'space label only for alignment
+label sp_lab0
+label sp_lab1
+'real label
+label lab
+:shared;
+else (no)
+if (Second Test Question?) then (yes)
+label sp_lab2
+goto lab
+else
+:nonShared;
 endif
-|1|
-!endfunction
-
-!a0 = "What do I want for my\nnext development environment"
-!a1 = "Windows?"
-!a2 = "Good decision"
-!a3 = "Not much \nchoice here"
-!b1 = "MacOS?"
-!b2 = "Just one \nmore question"
-!b3 = "Pretty good"
-!c1 = "Standard\nDesktop\nEnvironment?"
-!c2 = "MATE"
-!c3 = "GNOME"
-
-title Choosing
-|1|
-:a0]
-DECIDE(a1,a2,a3)
-DECIDE(b1,b2,b3)
-DECIDE(c1,c2,c3)
-detach
+endif
+:merge;

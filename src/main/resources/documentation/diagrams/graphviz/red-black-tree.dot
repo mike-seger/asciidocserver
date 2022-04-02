@@ -1,3 +1,5 @@
+!pragma layout smetana
+
 digraph G {
 	graph [ratio=.48];
 	node [style=filled, color=black, shape=circle, width=.6

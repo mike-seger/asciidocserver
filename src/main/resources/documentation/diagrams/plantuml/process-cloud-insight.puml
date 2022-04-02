@@ -1,5 +1,7 @@
 @startuml
 
+!pragma layout smetana
+
 !define SPRITESURL https://raw.githubusercontent.com/rabelenda/cicon-plantuml-sprites/v1.0/sprites
 !includeurl SPRITESURL/tomcat.puml
 !includeurl SPRITESURL/kafka.puml

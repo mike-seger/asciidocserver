@@ -1,4 +1,6 @@
 @startuml
+!pragma layout smetana
+
 scale 2
 skinparam class {
     BackgroundColor #9cbed6

@@ -1,3 +1,5 @@
+!pragma layout smetana
+
 digraph G {
   concentrate=True;
   rankdir=TB;

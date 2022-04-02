@@ -1,3 +1,5 @@
+!pragma layout smetana
+
 skinparam state {
   BackgroundColor    lightblue
   BorderColor        lightblue
