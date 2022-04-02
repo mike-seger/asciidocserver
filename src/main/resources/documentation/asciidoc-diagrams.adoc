@@ -16,6 +16,14 @@ plantuml::diagrams/plantuml/links.puml["diagram-001", format="svg", opts="inline
 ===== More
 plantuml::diagrams/plantuml/links-more.puml["diagram-002", format="svg", opts="inline"]
 
+==== WBS
+
+===== Hierarchy
+plantuml::diagrams/plantuml/wbs-1.puml["diagram-0031", format="svg", opts="inline"]
+
+===== Custom Colors
+plantuml::diagrams/plantuml/wbs-2.puml["diagram-0032", format="svg", opts="inline"]
+
 ==== Conditions
 ===== If
 plantuml::diagrams/plantuml/conditions-if.puml["diagram-003", format="svg", opts="inline"]
