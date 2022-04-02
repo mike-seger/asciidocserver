@@ -1,0 +1,46 @@
+@startuml
+
+!pragma layout smetana
+
+/' Set custom background colors for the default
+   component elements and the specific stereotypes. '/
+skinparam component {
+    BackgroundColor #ff6666
+    BackgroundColor<<Database>> #ccff66
+    BackgroundColor<<Spring service>> #66ccff
+    BackgroundColor<<Spring REST controllers>> #66ffcc
+    BackgroundColor<<Spring repository>> #66ffff
+    BackgroundColor<<Mail server>> #ffcc66
+}
+
+actor User
+[Third party application] as ThirdPartyApp
+
+together {
+    [PostgreSQL database] as PostgresDB <<Database>>
+    [Mail server] as Mail <<Mail server>>
+}
+
+package "Spring Boot Application" {
+    [APIController] <<Spring REST controllers>>
+    [AdminController] <<Spring REST controllers>>
+
+    [AdminService] <<Spring service>>
+    [DataStoreService] <<Spring service>>
+
+    [Repository] <<Spring repository>>
+}
+
+User --> AdminController
+ThirdPartyApp --> APIController
+
+APIController --> DataStoreService
+AdminController --> DataStoreService
+AdminController --> AdminService
+
+DataStoreService --> Repository
+AdminService --> Mail
+
+Repository --> PostgresDB
+
+@enduml

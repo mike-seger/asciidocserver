@@ -1,0 +1,26 @@
+@startuml links
+
+!pragma layout smetana
+
+skinparam componentBackgroundColor #BDE3FF
+skinparam linetype ortho
+[a]
+[b]
+[c]
+[d]
+[e]
+
+a --> e
+b --> c
+c --> d
+c -l-> e
+
+[rdf]
+[qq]
+
+b -> rdf
+rdf -d-> a
+c - qq
+qq -d- rdf
+
+@enduml

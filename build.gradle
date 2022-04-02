@@ -1,6 +1,12 @@
+buildscript {
+	ext {
+		springBootVersion = "2.6.5"
+	}
+}
+
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id "java"
+	id "org.springframework.boot" version "${springBootVersion}"
 }
 
 repositories {
@@ -8,27 +14,31 @@ repositories {
 }
 
 dependencies {
-	implementation "org.springframework.boot:spring-boot-starter-webflux:2.3.4.RELEASE"
+	implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+	implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
 
+	implementation "guru.nidi:graphviz-java:0.18.1"
+	implementation "org.graalvm.js:js:22.0.0.2"
+	
 	implementation "net.sf.jmimemagic:jmimemagic:0.1.5"
-	implementation 'org.apache.tika:tika-core:1.24.1'
-	implementation "ch.qos.logback:logback-classic:1.2.3"
+	implementation "org.apache.tika:tika-core:2.3.0"
+	implementation "ch.qos.logback:logback-classic:1.2.11"
 
-	compileOnly 'org.projectlombok:lombok:1.18.14'
-	annotationProcessor 'org.projectlombok:lombok:1.18.14'
+	compileOnly "org.projectlombok:lombok:1.18.22"
+	annotationProcessor "org.projectlombok:lombok:1.18.22"
 
-	implementation "com.github.skjolber.jackson:jackson-syntax-highlight:1.0.5"
+	implementation "com.github.skjolber.jackson:jackson-syntax-highlight:1.0.6"
 
-	implementation "org.asciidoctor:asciidoctorj:2.4.1"
-	implementation "org.asciidoctor:asciidoctorj-diagram:2.0.5"
+	implementation "org.asciidoctor:asciidoctorj:2.5.3"
+	implementation "org.asciidoctor:asciidoctorj-diagram:2.2.1"
 
-	testCompile 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-	testCompileOnly 'org.projectlombok:lombok:1.18.14'
-	testAnnotationProcessor 'org.projectlombok:lombok:1.18.14'
+	testImplementation "org.junit.jupiter:junit-jupiter-engine:5.8.2"
+	testCompileOnly "org.projectlombok:lombok:1.18.22"
+	testAnnotationProcessor "org.projectlombok:lombok:1.18.22"
 }
 
 bootJar {
-	requiresUnpack '**/jruby-complete*.jar', '**/asciidoctorj-*.jar', '**/vizjs.jar'
+	requiresUnpack "**/jruby-complete*.jar", "**/asciidoctorj-*.jar", "**/vizjs.jar"
 }
 
 bootRun {
@@ -38,4 +48,3 @@ bootRun {
 test {
 	useJUnitPlatform()
 }
-

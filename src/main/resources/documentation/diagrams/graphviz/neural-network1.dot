@@ -1,3 +1,5 @@
+!pragma layout smetana
+
 digraph G {
     rankdir = LR;
     splines=false;

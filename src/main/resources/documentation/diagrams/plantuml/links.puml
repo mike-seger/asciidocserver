@@ -1,0 +1,28 @@
+@startuml links
+
+!pragma layout smetana
+
+skinparam componentBackgroundColor #BDE3FF
+
+together {
+  [a]
+  [b]
+}
+
+[c]
+
+a -- b
+a -- c
+
+
+[d] 
+[e] 
+[f]
+
+d -- e
+d -- f
+
+'skinparam linetype polyline
+skinparam linetype ortho
+
+@enduml

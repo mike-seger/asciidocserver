@@ -157,7 +157,7 @@ public class PropertiesDumper {
                 .withComma(AnsiSyntaxHighlight.WHITE)
                 .withColon(AnsiSyntaxHighlight.WHITE)
                 .build();
-            try (JsonGenerator jsonGenerator = new SyntaxHighlightingJsonGenerator(delegate, highlighter)) {
+            try (JsonGenerator jsonGenerator = new SyntaxHighlightingJsonGenerator(delegate, highlighter, true)) {
                 jsonGenerator.setCodec(om);
                 jsonGenerator.writeObject(o);
                 baos.write(AnsiSyntaxHighlight.RESET.getBytes());

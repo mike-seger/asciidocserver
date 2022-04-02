@@ -45,6 +45,7 @@ https://asciidoctor.org/docs/asciidoctor-diagram/#diagram-attributes
 
 === PlantUML
 https://plantuml.com/sequence-diagram
+https://bschwarz.github.io/puml-themes/gallery.html
 https://plantuml-documentation.readthedocs.io/en/latest/diagrams/sequence.html
 https://plantuml-documentation.readthedocs.io/en/latest/diagrams/activity.html
 https://real-world-plantuml.com/?type=sequence

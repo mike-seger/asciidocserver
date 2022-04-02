@@ -1,0 +1,39 @@
+@startwbs
+!pragma layout smetana
+skinparam monochrome true
+<style>
+' this time, scoping to wbsDiagram
+wbsDiagram {
+
+  ' Here we introduce a global style, i.e. not targeted to any element
+  ' thus all lines (meaning connector and borders,
+  ' there are no other lines in WBS) are black by default
+  Linecolor black
+
+  ' But we can also target a diagram specific element, like arrow
+   arrow {
+    ' note that Connectors are actually "Arrows"; this may change in the future
+    ' so this means all Connectors and Arrows are now going to be green
+    LineColor green
+  }
+
+}
+</style>
+
++ New Job
+++ Decide on Job Requirements
++++ Identity gaps
++++ Review JDs
+++++ Sign-Up for courses
+++++ Volunteer
+++++ Reading
+++- Checklist
++++- Responsibilities
++++- Location
+++ CV Upload Done
++++ CV Updated
+++++ Spelling & Grammar
+++++ Check dates
+---- Skills
++++ Recruitment sites chosen
+@endwbs

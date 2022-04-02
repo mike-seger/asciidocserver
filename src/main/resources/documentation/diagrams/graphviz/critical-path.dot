@@ -1,3 +1,5 @@
+!pragma layout smetana
+
 digraph G {
     node [shape = "circle", width = "0.3",
         style = "setlinewidth (2), filled" color = "black",

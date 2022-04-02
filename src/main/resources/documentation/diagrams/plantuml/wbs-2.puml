@@ -1,0 +1,33 @@
+@startwbs
+<style>
+wbsDiagram {
+  .P1 {
+      BackgroundColor SkyBlue
+  }
+  .P2 {
+      BackgroundColor pink
+  }
+}
+</style>
++ Project
+
+++ WP1
++++ A <<P1>>
++++ B <<P2>>
+
+++ WP2
++++ C <<P1>>
++++ D <<P2>>
+
+
+legend
+Here are some explanations:
+|= |= table |= header |
+| a | table | row |
+|<#FF8080> red |<#80FF80> green |<#8080FF> blue |
+<#yellow>| b | table | row |
+endlegend
+
+right footer V2, 27/09/2021
+
+@endwbs

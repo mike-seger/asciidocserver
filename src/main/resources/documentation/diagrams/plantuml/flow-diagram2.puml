@@ -1,3 +1,5 @@
+!pragma layout smetana
+
 title Servlet Container
 
 (*) --> "ClickServlet.handleRequest()"

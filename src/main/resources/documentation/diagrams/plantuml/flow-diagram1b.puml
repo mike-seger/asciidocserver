@@ -1,4 +1,16 @@
+@startuml d1
 !pragma layout smetana
+/' 
+!theme materia
+!theme cerulean
+!theme cyborg
+!theme silver
+!theme sandstone
+!theme sketchy
+!theme spacelab
+!theme bluegray
+ '/
+!theme materia
 
 component asciidoctorj as adj
 component docToolChain as dtc
@@ -17,3 +29,5 @@ adj --> pdf
 
 dtc --> confluence
 dtc --> many_more
+
+@enduml

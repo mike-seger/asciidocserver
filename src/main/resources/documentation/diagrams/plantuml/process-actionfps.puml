@@ -1,4 +1,6 @@
 @startuml
+!pragma layout smetana
+
 skinparam DefaultTextAlignment center
 skinparam arrowColor #000000
 skinparam rectangleBackgroundColor #CFE2F3
