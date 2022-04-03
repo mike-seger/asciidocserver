@@ -192,6 +192,9 @@ gnuplot::diagrams/gnuplot/viridis-colormap.gnu["diagram-107", format=svg, opts="
 
 == General
 
+=== Icons
+plantuml::diagrams/plantuml/icons.puml["diagram-350", format="svg", opts="inline"]
+
 === List Fonts
 [plantuml, "fontlist", format="svg", opts="inline"]
 ----
