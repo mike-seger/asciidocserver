@@ -137,7 +137,11 @@ Link: https://plantuml.com/archimate-diagram +
 plantuml::diagrams/plantuml/archimate.puml["diagram-330", format="svg", opts="inline"]
 
 == DITAA Diagram
+=== Example 1
 ditaa::diagrams/ditaa/diagram.ditaa["diagram-70", format="svg", opts="inline"]]
+
+=== Example 2
+ditaa::diagrams/ditaa/diagram2.ditaa["diagram-701", format="svg", opts="inline"]]
 
 == GraphViz
 === State Transition
